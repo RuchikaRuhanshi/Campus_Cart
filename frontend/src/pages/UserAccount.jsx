@@ -136,8 +136,19 @@ const UserAccount = () => {
   );
 
   return (
-    <div className="min-h-screen bg-primary py-4 md:py-10 px-4 transition-colors duration-300">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
+    <div className="relative min-h-screen bg-[var(--bg-primary)] dark:bg-[var(--bg-primary)] pt-24 pb-16 px-4 md:px-8 transition-colors duration-300 overflow-hidden font-sans">
+      
+      {/* Global Campus Fixed Backdrop */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+          <img 
+              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format" 
+              alt="Campus Workspace Background" 
+              className="w-full h-full object-cover opacity-45 dark:opacity-30"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/70 to-[var(--bg-primary)] dark:from-black/45 dark:via-black/85 dark:to-[var(--bg-primary)]"></div>
+      </div>
+
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 relative z-10">
         
         {/* Sidebar */}
         <div className="md:col-span-1 space-y-2">
@@ -185,6 +196,20 @@ const UserAccount = () => {
 
              <h2 className="text-xl font-bold text-text-primary">{user.name}</h2>
              <p className="text-sm text-text-secondary">{user.email}</p>
+             
+             {/* Verification Badges */}
+             <div className="flex flex-wrap justify-center gap-1.5 mt-2">
+                {user.isVerifiedStudent && (
+                    <span className="inline-flex items-center gap-0.5 bg-emerald-500/20 text-emerald-800 dark:text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200/30" title="Verified Student">
+                       ✓ Student
+                    </span>
+                )}
+                {user.isVerifiedSeller && (
+                    <span className="inline-flex items-center gap-0.5 bg-amber-500/20 text-amber-800 dark:text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200/30" title="Verified Seller">
+                       ★ Seller
+                    </span>
+                )}
+             </div>
              
              <div className="flex items-center gap-2 mt-3 bg-[#f4ead2] dark:bg-[rgba(92,66,38,0.12)] px-4 py-2 rounded-full border border-[#d8c9b2] dark:border-[var(--border-color)]">
                 <span className="font-bold text-[#8b6d48] dark:text-[#ecd8b1]">{user.averageRating?.toFixed(1) || "0.0"}</span>
@@ -408,6 +433,11 @@ const UserAccount = () => {
                     </div>
                 </div>
             )}
+            {/* Dynamic Background Blobs */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                 <div className="absolute top-[20%] left-[-15%] w-[450px] h-[450px] bg-[var(--accent)]/5 rounded-full blur-[110px] animate-blob-1"></div>
+                 <div className="absolute bottom-[30%] right-[-15%] w-[500px] h-[500px] bg-[var(--accent-secondary)]/5 rounded-full blur-[130px] animate-blob-2"></div>
+            </div>
         </div>
 
       </div>

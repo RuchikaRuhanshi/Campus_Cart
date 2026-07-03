@@ -34,6 +34,26 @@ const Users = () => {
     }
   };
 
+  const handleToggleVerifyStudent = async (id) => {
+    try {
+      const response = await api.put(`/admin/users/${id}/verify-student`);
+      setUsers(users.map(u => u._id === id ? { ...u, isVerifiedStudent: response.data.isVerifiedStudent } : u));
+    } catch (error) {
+      console.error('Error toggling student verification:', error);
+      alert('Failed to update student verification status');
+    }
+  };
+
+  const handleToggleVerifySeller = async (id) => {
+    try {
+      const response = await api.put(`/admin/users/${id}/verify-seller`);
+      setUsers(users.map(u => u._id === id ? { ...u, isVerifiedSeller: response.data.isVerifiedSeller } : u));
+    } catch (error) {
+      console.error('Error toggling seller verification:', error);
+      alert('Failed to update seller verification status');
+    }
+  };
+
   const filteredUsers = users.filter(user => 
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -65,6 +85,8 @@ const Users = () => {
               <th className="p-4">Email</th>
               <th className="p-4">College</th>
               <th className="p-4">Role</th>
+              <th className="p-4 text-center">Student Verified</th>
+              <th className="p-4 text-center">Seller Verified</th>
               <th className="p-4 text-center">Actions</th>
             </tr>
           </thead>
@@ -80,6 +102,32 @@ const Users = () => {
                   }`}>
                     {user.role}
                   </span>
+                </td>
+                <td className="p-4 text-center">
+                  <button
+                    onClick={() => handleToggleVerifyStudent(user._id)}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
+                      user.isVerifiedStudent 
+                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100' 
+                        : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100'
+                    }`}
+                  >
+                    <span className={`w-1.5 h-1.5 rounded-full ${user.isVerifiedStudent ? 'bg-emerald-500 animate-pulse' : 'bg-gray-400'}`}></span>
+                    {user.isVerifiedStudent ? 'Verified Student' : 'Unverified'}
+                  </button>
+                </td>
+                <td className="p-4 text-center">
+                  <button
+                    onClick={() => handleToggleVerifySeller(user._id)}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
+                      user.isVerifiedSeller 
+                        ? 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100' 
+                        : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100'
+                    }`}
+                  >
+                    <span className={`w-1.5 h-1.5 rounded-full ${user.isVerifiedSeller ? 'bg-amber-500 animate-pulse' : 'bg-gray-400'}`}></span>
+                    {user.isVerifiedSeller ? 'Verified Seller' : 'Standard'}
+                  </button>
                 </td>
                 <td className="p-4 text-center">
                   <button 

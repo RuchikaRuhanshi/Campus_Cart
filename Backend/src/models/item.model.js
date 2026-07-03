@@ -66,6 +66,16 @@ const itemSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+
+    isFlagged: {
+      type: Boolean,
+      default: false,
+    },
+
+    flagReason: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

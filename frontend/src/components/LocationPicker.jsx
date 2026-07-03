@@ -14,7 +14,7 @@ const defaultCenter = {
 
 const libraries = ['places'];
 
-const LocationPicker = ({ location, setLocation }) => {
+const LocationPicker = ({ location, setLocation, collegeName }) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY, 
@@ -61,6 +61,117 @@ const LocationPicker = ({ location, setLocation }) => {
          }
     }
   }, [location?.coordinates?.lat, location?.coordinates?.lng, isLoaded, markerPosition]);
+
+const COLLEGE_COORDINATES = {
+  "delhi": { lat: 28.545, lng: 77.272 },
+  "bombay": { lat: 19.1334, lng: 72.9133 },
+  "iitb": { lat: 19.1334, lng: 72.9133 },
+  "kharagpur": { lat: 22.3149, lng: 87.3105 },
+  "iitkgp": { lat: 22.3149, lng: 87.3105 },
+  "madras": { lat: 12.9915, lng: 80.2336 },
+  "iitm": { lat: 12.9915, lng: 80.2336 },
+  "kanpur": { lat: 26.5123, lng: 80.2329 },
+  "iitk": { lat: 26.5123, lng: 80.2329 },
+  "dtu": { lat: 28.7501, lng: 77.1177 },
+  "nsut": { lat: 28.6083, lng: 77.0373 },
+  "pilani": { lat: 28.3639, lng: 75.5870 },
+  "bits": { lat: 28.3639, lng: 75.5870 },
+  "vit": { lat: 12.9692, lng: 79.1559 },
+  "vellore": { lat: 12.9692, lng: 79.1559 },
+  "srm": { lat: 12.8235, lng: 80.0424 },
+  "mit": { lat: 42.3601, lng: -71.0942 },
+  "stanford": { lat: 37.4275, lng: -122.1697 },
+  "jamshedpur": { lat: 22.7744, lng: 86.1414 },
+  "nit jamshedpur": { lat: 22.7744, lng: 86.1414 }
+};
+
+const getLocalCollegeCoords = (name) => {
+  if (!name) return null;
+  const normalized = name.toLowerCase();
+  for (const [key, coords] of Object.entries(COLLEGE_COORDINATES)) {
+    if (normalized.includes(key)) {
+      return coords;
+    }
+  }
+  return null;
+};
+
+// LocationPicker component body...
+  // Geocode college name when it changes to center the map on the campus
+  useEffect(() => {
+    if (collegeName) {
+      const localCoords = getLocalCollegeCoords(collegeName);
+      if (localCoords) {
+        setMarkerPosition(localCoords);
+        if (map) {
+          map.panTo(localCoords);
+        }
+        if (setLocation) {
+          setLocation((prev) => ({
+            ...prev,
+            coordinates: localCoords
+          }));
+        }
+        return; // Skip geocoder if we found a local match
+      }
+    }
+
+    const runGeocode = () => {
+      if (isLoaded && collegeName && window.google && window.google.maps) {
+        const geocoder = new window.google.maps.Geocoder();
+        geocoder.geocode({ address: collegeName }, (results, status) => {
+          if (status === "OK" && results[0]) {
+            const pos = {
+              lat: results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng()
+            };
+            setMarkerPosition(pos);
+            if (map) map.panTo(pos);
+            if (setLocation) {
+              setLocation((prev) => ({
+                ...prev,
+                address: results[0].formatted_address,
+                coordinates: pos
+              }));
+            }
+          } else {
+            fallbackToNominatim();
+          }
+        });
+      } else if (collegeName) {
+        fallbackToNominatim();
+      }
+    };
+
+    const fallbackToNominatim = () => {
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(collegeName)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data[0]) {
+            const pos = {
+              lat: parseFloat(data[0].lat),
+              lng: parseFloat(data[0].lon)
+            };
+            setMarkerPosition(pos);
+            if (map) map.panTo(pos);
+            if (setLocation) {
+              setLocation((prev) => ({
+                ...prev,
+                address: data[0].display_name,
+                coordinates: pos
+              }));
+            }
+          }
+        })
+        .catch(err => console.error("LocationPicker Nominatim failed:", err));
+    };
+
+    const delayDebounceFn = setTimeout(() => {
+      runGeocode();
+    }, 1000); // 1s debounce to avoid API spam while typing
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [collegeName, isLoaded, map]);
 
   const onLoad = useCallback(function callback(map) {
     setMap(map);

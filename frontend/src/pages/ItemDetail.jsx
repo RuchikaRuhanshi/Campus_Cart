@@ -181,8 +181,22 @@ const ItemDetail = () => {
                                 {item.seller?.name[0]}
                             </div>
                             <div>
-                                <p className="font-bold text-text-primary dark:text-white">{item.seller?.name}</p>
-                                <p className="text-sm text-text-secondary dark:text-[#b8b18b']">{item.seller?.collegeName}</p>
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <p className="font-bold text-text-primary dark:text-white">{item.seller?.name}</p>
+                                    <div className="flex gap-1">
+                                        {item.seller?.isVerifiedStudent && (
+                                            <span className="inline-flex items-center gap-0.5 bg-emerald-500/20 text-emerald-800 dark:text-emerald-400 text-[9px] font-bold px-1.5 py-0.5 rounded-full border border-emerald-200/30 animate-pulse" title="Verified Student">
+                                                <FiCheck className="w-2.5 h-2.5 stroke-[3]" /> Student
+                                            </span>
+                                        )}
+                                        {item.seller?.isVerifiedSeller && (
+                                            <span className="inline-flex items-center gap-0.5 bg-amber-500/20 text-amber-800 dark:text-amber-400 text-[9px] font-bold px-1.5 py-0.5 rounded-full border border-amber-200/30 animate-pulse" title="Verified Seller">
+                                                <FiStar className="w-2.5 h-2.5 fill-current" /> Seller
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                                <p className="text-sm text-text-secondary dark:text-[#b8b18b]">{item.seller?.collegeName}</p>
                             </div>
                         </div>
 

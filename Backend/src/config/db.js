@@ -15,7 +15,7 @@ const connectDB = async () => {
       console.log('MongoDB disconnected');
     });
 
-    await mongoose.connect(`${process.env.MONGO_URI}`);
+    await mongoose.connect(process.env.MONGO_URI || process.env.MONGODB_URI);
 
     console.log('Initial connection established.');
 

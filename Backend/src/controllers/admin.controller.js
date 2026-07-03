@@ -221,4 +221,52 @@ export const getReports = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch reports" });
   }
 };
+
+/**
+ * Toggles the verification status of a seller.
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export const toggleVerifySeller = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.isVerifiedSeller = !user.isVerifiedSeller;
+    await user.save();
+    res.status(200).json({ 
+      message: `User seller verification status updated to ${user.isVerifiedSeller}`, 
+      isVerifiedSeller: user.isVerifiedSeller 
+    });
+  } catch (error) {
+    console.error("Error toggling verify seller:", error);
+    res.status(500).json({ message: "Failed to update seller verification status" });
+  }
+};
+
+/**
+ * Toggles the verification status of a student.
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export const toggleVerifyStudent = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.isVerifiedStudent = !user.isVerifiedStudent;
+    await user.save();
+    res.status(200).json({ 
+      message: `User student verification status updated to ${user.isVerifiedStudent}`, 
+      isVerifiedStudent: user.isVerifiedStudent 
+    });
+  } catch (error) {
+    console.error("Error toggling verify student:", error);
+    res.status(500).json({ message: "Failed to update student verification status" });
+  }
+};
  

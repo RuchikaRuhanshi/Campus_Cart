@@ -14,6 +14,8 @@ import ItemDetail from "./pages/ItemDetail.jsx";
 import SellItem from "./pages/SellItem.jsx";
 import EditItem from "./pages/EditItem.jsx";
 import OrderDetail from "./pages/OrderDetail.jsx";
+import UrgentFeed from "./pages/UrgentFeed.jsx";
+import Heatmap from "./pages/Heatmap.jsx";
 
 // ... imports
 import { ThemeProvider } from "./context/ThemeContext";
@@ -62,6 +64,8 @@ function App() {
         <Route path="/items/create" element={<ProtectedRoute><SellItem /></ProtectedRoute>} />
         <Route path="/items/edit/:id" element={<ProtectedRoute><EditItem /></ProtectedRoute>} />
         <Route path="/order/:id" element={<ProtectedRoute><OrderDetail /></ProtectedRoute>} />
+        <Route path="/urgent" element={<UrgentFeed />} />
+        <Route path="/heatmap" element={<Heatmap />} />
       </Routes>
       </NotificationProvider>
     </ThemeProvider>

@@ -11,6 +11,8 @@ import uploadRouter from './src/routes/upload.route.js';
 import chatRouter from './src/routes/chat.route.js';
 import reviewRouter from './src/routes/review.route.js';
 import adminRouter from './src/routes/admin.route.js';
+import urgentRouter from './src/routes/urgent.route.js';
+import spotRouter from './src/routes/campusSpot.route.js';
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { saveChatMessage } from './src/controllers/chat.controller.js';
@@ -125,6 +127,8 @@ app.use("/api/notifications", notificationRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/review", reviewRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/urgent", urgentRouter);
+app.use("/api/spots", spotRouter);
 
 
 app.get('/', (req, res) => {
