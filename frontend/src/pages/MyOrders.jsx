@@ -92,17 +92,26 @@ const MyOrders = () => {
     }
   };
 
+  const getStatusIcon = (status) => {
+    switch (status?.toUpperCase()) {
+      case "PENDING": return "⏳";
+      case "CONFIRMED": return "🤝";
+      case "COMPLETED": return "✅";
+      default: return "📦";
+    }
+  };
+
   return (
-    <div className="relative min-h-screen bg-[var(--bg-primary)] dark:bg-[var(--bg-primary)] pt-24 pb-16 px-4 md:px-8 transition-colors duration-300 font-sans overflow-hidden">
+    <div className="relative min-h-screen bg-transparent dark:bg-[var(--bg-primary)] pt-24 pb-16 px-4 md:px-8 transition-colors duration-300 font-sans overflow-hidden">
       
       {/* Global Campus Fixed Backdrop */}
       <div className="fixed inset-0 z-0 pointer-events-none">
           <img 
               src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1200&auto=format" 
               alt="Campus Sunset Background" 
-              className="w-full h-full object-cover opacity-45 dark:opacity-30"
+              className="w-full h-full object-cover opacity-35 dark:opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/25 via-white/80 to-[var(--bg-primary)] dark:from-black/45 dark:via-black/85 dark:to-[var(--bg-primary)]"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-[var(--bg-primary)]/50 to-[var(--bg-primary)]/90 dark:from-black/45 dark:via-black/85 dark:to-[var(--bg-primary)]"></div>
       </div>
 
       <div className="max-w-5xl mx-auto relative z-10">
@@ -167,8 +176,12 @@ const MyOrders = () => {
               return (
                 <div 
                   key={o._id} 
-                  className="glass-panel border border-[var(--border-color)] bg-[var(--bg-surface)]/70 dark:bg-[var(--bg-surface)]/50 rounded-[32px] p-6 flex flex-col md:flex-row gap-6 justify-between items-stretch hover:shadow-lg hover:border-[var(--accent)]/30 hover:-translate-y-0.5 transition-all duration-300"
+                  className="glass-panel border border-[var(--border-color)] bg-[var(--bg-surface)]/70 dark:bg-[var(--bg-surface)]/50 rounded-[32px] p-6 flex flex-col md:flex-row gap-6 justify-between items-stretch hover:shadow-lg hover:border-[var(--accent)]/30 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group"
                 >
+                  {/* Status Watermark */}
+                  <div className="absolute right-48 bottom-4 text-8xl opacity-[0.05] dark:opacity-[0.03] select-none pointer-events-none transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 hidden md:block">
+                    {getStatusIcon(o.status)}
+                  </div>
                   <div className="flex gap-5 items-center flex-1">
                     <div className="h-24 w-24 rounded-[24px] overflow-hidden border border-[var(--border-color)] bg-[#f4ead2] dark:bg-[var(--bg-surface)] shrink-0">
                       <img 

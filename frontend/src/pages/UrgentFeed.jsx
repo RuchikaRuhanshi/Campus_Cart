@@ -78,8 +78,18 @@ const UrgentFeed = () => {
     }
   };
 
+  const getCategoryIcon = (cat) => {
+    switch (cat) {
+      case "Books": return "📚";
+      case "Electronics": return "💻";
+      case "Dorm": return "🏠";
+      case "Sports": return "⚽";
+      default: return "✨";
+    }
+  };
+
   return (
-    <div className="relative min-h-screen bg-[var(--bg-primary)] dark:bg-[var(--bg-primary)] pt-24 pb-16 px-4 sm:px-8 transition-colors duration-300 overflow-hidden font-sans">
+    <div className="relative min-h-screen bg-transparent dark:bg-[var(--bg-primary)] pt-24 pb-16 px-4 sm:px-8 transition-colors duration-300 overflow-hidden font-sans">
       <div className="max-w-5xl mx-auto relative z-10">
         
         {/* Header Banner with real university campus sunset backdrop */}
@@ -129,8 +139,13 @@ const UrgentFeed = () => {
             {requests.map((req) => (
               <div 
                 key={req._id}
-                className="bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group"
+                className="bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-lg hover:border-[var(--accent)]/30 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group"
               >
+                {/* Massive category background watermark */}
+                <div className="absolute right-4 bottom-4 text-[100px] opacity-[0.05] dark:opacity-[0.03] select-none pointer-events-none transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
+                  {getCategoryIcon(req.category)}
+                </div>
+
                 {/* Urgent Tag Indicator */}
                 <div className={`absolute top-0 left-0 w-2 h-full ${
                   req.urgency === "Tonight" ? "bg-red-500" :
