@@ -96,7 +96,7 @@ const UrgentFeed = () => {
         <img
           src="https://images.unsplash.com/photo-U7c8rTBwc0c?q=80&w=1200&auto=format"
           alt="Campus sunset plaza"
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover opacity-50"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/85 to-[var(--bg-primary)]"></div>
       </div>
@@ -159,7 +159,7 @@ const UrgentFeed = () => {
 
                 {/* Urgent Tag Indicator */}
                 <div className={`absolute top-0 left-0 w-2 h-full ${req.urgency === "Tonight" ? "bg-red-500" :
-                    req.urgency === "Tomorrow" ? "bg-amber-500" : "bg-[var(--accent)]"
+                  req.urgency === "Tomorrow" ? "bg-amber-500" : "bg-[var(--accent)]"
                   }`} />
 
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-4 ml-2">
@@ -168,7 +168,7 @@ const UrgentFeed = () => {
                       <span className="text-[var(--accent)]">{req.category}</span>
                       <span className="text-slate-400">•</span>
                       <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-white ${req.urgency === "Tonight" ? "bg-red-500" :
-                          req.urgency === "Tomorrow" ? "bg-amber-500" : "bg-[var(--accent)]"
+                        req.urgency === "Tomorrow" ? "bg-amber-500" : "bg-[var(--accent)]"
                         }`}>
                         <FiClock size={12} /> {req.urgency}
                       </span>
