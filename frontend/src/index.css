@@ -83,15 +83,19 @@
 
 @layer base {
   :root {
-    --bg-primary: #fbfbfa;
+    --bg-primary: #faf8f5;
     --bg-surface: #ffffff;
-    --nav-bg: rgba(251, 251, 250, 0.92);
-    --text-primary: #1e1b18;
-    --text-secondary: #6e6a64;
-    --border-color: #ebe7e0;
-    --accent: #8c7355;
-    --accent-secondary: #b5a593;
-    --card-shadow: 0 16px 40px -12px rgba(26, 24, 22, 0.08);
+    --nav-bg: rgba(250, 248, 245, 0.94);
+    --text-primary: #1c1917;
+    --text-secondary: #78716c;
+    --border-color: #e7e2da;
+    --accent: #78350f;
+    --accent-secondary: #d97706;
+    --card-shadow: 0 20px 48px -16px rgba(120, 53, 15, 0.06), 0 4px 12px -4px rgba(0, 0, 0, 0.02);
+    --bg-image: 
+      radial-gradient(circle at 10% 20%, rgba(217, 119, 6, 0.06), transparent 45%),
+      radial-gradient(circle at 90% 80%, rgba(120, 53, 15, 0.05), transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.02), transparent 60%);
   }
 
   .dark {
@@ -104,6 +108,9 @@
     --accent: #c5b49f;
     --accent-secondary: #8c7355;
     --card-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.95);
+    --bg-image: 
+      radial-gradient(circle at top left, rgba(20, 184, 166, 0.06), transparent 22%),
+      radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.04), transparent 30%);
   }
 
   html {
@@ -119,9 +126,7 @@
     min-height: 100vh;
     font-family: var(--font-sans);
     background-color: var(--bg-primary);
-    background-image:
-      radial-gradient(circle at top left, rgba(20, 184, 166, 0.06), transparent 22%),
-      radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.04), transparent 30%);
+    background-image: var(--bg-image);
     background-attachment: fixed;
     color: var(--text-primary);
     transition: background-color 0.35s ease, color 0.35s ease;
