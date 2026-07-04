@@ -263,9 +263,12 @@ const Analytics = () => {
                                   {getImageUrl(seller.image) && !imageErrors[seller._id] ? (
                                     <img 
                                       src={getImageUrl(seller.image)} 
-                                      alt={seller.name} 
+                                      alt="" 
                                       className="w-full h-full object-cover" 
-                                      onError={() => setImageErrors(prev => ({ ...prev, [seller._id]: true }))}
+                                      onError={(e) => {
+                                        e.target.style.display = 'none';
+                                        setImageErrors(prev => ({ ...prev, [seller._id]: true }));
+                                      }}
                                     />
                                   ) : (
                                     seller.name?.charAt(0).toUpperCase()
