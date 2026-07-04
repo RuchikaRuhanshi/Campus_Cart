@@ -1,15 +1,18 @@
 import { useState } from "react";
 import api from "../utils/api";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
+  const [submitting, setSubmitting] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const submit = async (e) => {
     e.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
     try {
       const res = await api.post("/user/login", form);
       // handle different response shapes
@@ -24,6 +27,8 @@ const Login = () => {
     } catch (err) {
       const msg = err?.response?.data?.message || err.message || 'Login failed';
       alert(msg);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -69,10 +74,12 @@ const Login = () => {
             />
           </div>
 
-          <button type="submit" className="w-full btn-sassy">Login</button>
+          <button type="submit" disabled={submitting} className="w-full btn-sassy">
+            {submitting ? "Signing in..." : "Login"}
+          </button>
 
           <p className="text-center text-sm text-text-secondary">
-            New here? <a href="/register" className="font-bold text-[var(--accent-secondary)]">Create an account</a>
+            New here? <Link to="/register" className="font-bold text-[var(--accent-secondary)]">Create an account</Link>
           </p>
         </form>
       </div>

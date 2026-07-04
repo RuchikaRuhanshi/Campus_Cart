@@ -23,6 +23,7 @@ const Register = () => {
     }
   });
 
+  const [submitting, setSubmitting] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -40,6 +41,8 @@ const Register = () => {
 
   const submit = async (e) => {
     e.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
     try {
       const res = await api.post("/user/register", form);
       const token = res.data?.token || res.data?.data?.token;
@@ -50,6 +53,8 @@ const Register = () => {
     } catch (err) {
       const msg = err?.response?.data?.message || err.message || 'Registration failed';
       alert(msg);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -157,7 +162,9 @@ const Register = () => {
                   </div>
                   <div className="flex gap-4 flex-col md:flex-row">
                     <button type="button" onClick={() => setStep(1)} className="w-full rounded-3xl border border-[var(--border-color)] bg-white text-text-primary px-5 py-3 font-bold hover:bg-[#f4ead2] transition">Back</button>
-                    <button type="submit" className="w-full btn-sassy">Register</button>
+                    <button type="submit" disabled={submitting} className="w-full btn-sassy">
+                      {submitting ? "Registering..." : "Register"}
+                    </button>
                   </div>
                 </>
               )}
