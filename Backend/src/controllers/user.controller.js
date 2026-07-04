@@ -54,10 +54,10 @@ const loginUser = async (req,res)=>{
     try {
         const {name,email,mobileNo,password,collegeName,branch,yearOfStudy,image, location} = req.body;
 
-        //if user already exists (same email OR mobile)
-        const existUser = await userModel.findOne({ $or: [{ mobileNo }, { email }] });
+        //if user already exists (same email)
+        const existUser = await userModel.findOne({ email });
         if(existUser){
-            return res.status(400).json({success:false,message:"User with same mobile no or email already exist"});
+            return res.status(400).json({success:false,message:"User with same email already exists"});
         }
 
         //validate email and password
