@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getImageUrl } from "../utils/api";
 
 import {
   FiMenu,
@@ -28,6 +29,13 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const location = useLocation();
+  const [imageError, setImageError] = useState(false);
+  const [drawerImageError, setDrawerImageError] = useState(false);
+
+  useEffect(() => {
+    setImageError(false);
+    setDrawerImageError(false);
+  }, [user]);
 
   const isActive = (path) => location.pathname === path;
 
@@ -64,8 +72,16 @@ const Navbar = () => {
                 className="cursor-pointer flex items-center gap-2 pl-1 pr-3 py-1 bg-[var(--bg-surface)]/80 hover:bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-full transition-all duration-300"
                 title="Open Dashboard"
               >
-                {user.image ? (
-                  <img src={user.image} alt="Profile" className="w-8 h-8 rounded-full object-cover" />
+                {getImageUrl(user.image) && !imageError ? (
+                  <img 
+                    src={getImageUrl(user.image)} 
+                    alt="" 
+                    className="w-8 h-8 rounded-full object-cover" 
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      setImageError(true);
+                    }}
+                  />
                 ) : (
                   <div className="w-8 h-8 rounded-full bg-[var(--accent)]/15 text-[var(--accent)] flex items-center justify-center text-sm font-bold">
                     {user.name ? user.name[0].toUpperCase() : "U"}
@@ -116,8 +132,16 @@ const Navbar = () => {
             {/* User Profile Summary inside Slider */}
             {user && (
               <div className="p-4 bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-2xl flex items-center gap-3">
-                {user.image ? (
-                  <img src={user.image} alt="Profile" className="w-12 h-12 rounded-full object-cover border border-[var(--accent)]" />
+                {getImageUrl(user.image) && !drawerImageError ? (
+                  <img 
+                    src={getImageUrl(user.image)} 
+                    alt="" 
+                    className="w-12 h-12 rounded-full object-cover border border-[var(--accent)]" 
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      setDrawerImageError(true);
+                    }}
+                  />
                 ) : (
                   <div className="w-12 h-12 rounded-full bg-[var(--accent)]/15 text-[var(--accent)] flex items-center justify-center text-lg font-black">
                     {user.name ? user.name[0].toUpperCase() : "U"}

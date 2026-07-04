@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../utils/api";
+import api, { getImageUrl } from "../utils/api";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiShoppingBag, FiBox, FiLogOut, FiSettings, FiStar } from "react-icons/fi";
@@ -60,6 +60,8 @@ const UserAccount = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
   const [imageUploading, setImageUploading] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [previewImageError, setPreviewImageError] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -72,6 +74,8 @@ const UserAccount = () => {
             image: user.image || "",
             location: user.location || { address: "", coordinates: { lat: 0, lng: 0 } }
         });
+        setImageError(false);
+        setPreviewImageError(false);
     }
   }, [user]);
 
@@ -156,8 +160,16 @@ const UserAccount = () => {
         <div className="md:col-span-1 space-y-2">
           <div className="bg-surface p-6 rounded-[32px] shadow-sassy border border-border-color mb-6 flex flex-col items-center text-center relative group">
              <div className="w-20 h-20 rounded-full bg-[#f4ead2] dark:bg-[var(--bg-surface)] text-[#8b6d48] dark:text-[#ecd8b1] flex items-center justify-center text-3xl font-bold mb-3 overflow-hidden border-2 border-[#d8c9b2] dark:border-[var(--border-color)]">
-                {user.image ? (
-                    <img src={user.image} alt={user.name} className="w-full h-full object-cover" />
+                {getImageUrl(user.image) && !imageError ? (
+                    <img 
+                      src={getImageUrl(user.image)} 
+                      alt="" 
+                      className="w-full h-full object-cover" 
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        setImageError(true);
+                      }}
+                    />
                 ) : (
                     user.name?.charAt(0)
                 )}
@@ -257,8 +269,16 @@ const UserAccount = () => {
                             <>
                                 <div className="bg-surface dark:bg-[var(--bg-surface)] p-4 rounded-3xl border border-border-color transition-all flex flex-col md:flex-row items-center gap-4">
                                     <div className="relative w-20 h-20 rounded-full bg-[var(--bg-surface)] dark:bg-[#3e2f1f] border-2 border-[var(--border-color)] overflow-hidden flex items-center justify-center shadow-md">
-                                        {formData.image ? (
-                                            <img src={formData.image} alt="Profile Preview" className="w-full h-full object-cover" />
+                                        {getImageUrl(formData.image) && !previewImageError ? (
+                                            <img 
+                                              src={getImageUrl(formData.image)} 
+                                              alt="" 
+                                              className="w-full h-full object-cover" 
+                                              onError={(e) => {
+                                                e.target.style.display = 'none';
+                                                setPreviewImageError(true);
+                                              }}
+                                            />
                                         ) : (
                                             <span className="text-[#8b6d48] font-bold text-2xl">{formData.name?.charAt(0)}</span>
                                         )}
