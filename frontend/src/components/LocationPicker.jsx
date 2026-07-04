@@ -212,6 +212,7 @@ const getLocalCollegeCoords = (name) => {
                     coordinates: newPos
                 }));
             }
+        }
   }, [setLocation]);
 
   const handleUseCurrentLocation = () => {
