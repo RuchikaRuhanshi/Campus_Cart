@@ -212,8 +212,53 @@ const getLocalCollegeCoords = (name) => {
                     coordinates: newPos
                 }));
             }
-        }
   }, [setLocation]);
+
+  const handleUseCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setMarkerPosition(pos);
+          if (map) map.panTo(pos);
+          
+          if (setLocation) {
+            if (window.google && window.google.maps) {
+              const geocoder = new window.google.maps.Geocoder();
+              geocoder.geocode({ location: pos }, (results, status) => {
+                if (status === "OK" && results[0]) {
+                  setLocation((prev) => ({
+                    ...prev,
+                    address: results[0].formatted_address,
+                    coordinates: pos
+                  }));
+                } else {
+                  setLocation((prev) => ({
+                    ...prev,
+                    coordinates: pos
+                  }));
+                }
+              });
+            } else {
+              setLocation((prev) => ({
+                ...prev,
+                coordinates: pos
+              }));
+            }
+          }
+        },
+        (error) => {
+          console.error("Error getting location: ", error);
+          alert("Could not access your location. Please check your browser permissions.");
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by your browser.");
+    }
+  };
 
   if (!isLoaded) {
     return <div className="h-[300px] w-full flex items-center justify-center bg-gray-100 rounded-xl border border-gray-300">Loading Map...</div>;
@@ -221,6 +266,13 @@ const getLocalCollegeCoords = (name) => {
 
   return (
     <div className="h-[300px] w-full rounded-xl overflow-hidden border border-gray-300 relative z-0">
+      <button 
+        type="button" 
+        onClick={handleUseCurrentLocation}
+        className="absolute bottom-4 left-4 z-10 bg-white dark:bg-zinc-900 text-[#8b6d48] dark:text-[#ecd8b1] font-bold text-xs px-3.5 py-2 rounded-full shadow-md border border-gray-200 dark:border-zinc-800 hover:bg-[#fdfaf2] dark:hover:bg-zinc-800 transition flex items-center gap-1.5"
+      >
+        📍 Use Current Location
+      </button>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={markerPosition || defaultCenter}

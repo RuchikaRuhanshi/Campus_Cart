@@ -18,6 +18,7 @@ const Analytics = () => {
   const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeSubTab, setActiveSubTab] = useState("stats"); // "stats", "leaderboard", "ai"
+  const [imageErrors, setImageErrors] = useState({});
 
   // AI Predictor Form State
   const [predictForm, setPredictForm] = useState({
@@ -243,8 +244,13 @@ const Analytics = () => {
                             <td className="py-4 px-4">
                               <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-full bg-[#f4ead2] dark:bg-[var(--bg-surface)] text-[#8b6d48] flex items-center justify-center font-bold text-sm overflow-hidden border border-border-color">
-                                  {seller.image ? (
-                                    <img src={seller.image} alt={seller.name} className="w-full h-full object-cover" />
+                                  {seller.image && !imageErrors[seller._id] ? (
+                                    <img 
+                                      src={seller.image} 
+                                      alt={seller.name} 
+                                      className="w-full h-full object-cover" 
+                                      onError={() => setImageErrors(prev => ({ ...prev, [seller._id]: true }))}
+                                    />
                                   ) : (
                                     seller.name?.charAt(0).toUpperCase()
                                   )}
