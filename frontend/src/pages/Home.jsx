@@ -18,7 +18,7 @@ const Home = () => {
     const primaryBtnRef = useRef(null);
     const bentoRef = useRef(null);
     const inventoryRef = useRef(null);
-    
+
     const [scrollProgress, setScrollProgress] = useState(0);
     const [currentImage, setCurrentImage] = useState(0);
     const images = [
@@ -73,19 +73,19 @@ const Home = () => {
             items = items.filter(item => item.category?.toLowerCase() === selectedCategory.toLowerCase());
         }
         if (searchQuery) {
-            items = items.filter(item => 
+            items = items.filter(item =>
                 item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 item.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 item.category?.toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
-        setFilteredItems(items.slice(0, 8)); 
+        setFilteredItems(items.slice(0, 8));
     }, [selectedCategory, searchQuery, allItems]);
 
     // Animate inventory items when they load/change
     useEffect(() => {
         if (filteredItems.length > 0) {
-            gsap.fromTo(".inventory-item", 
+            gsap.fromTo(".inventory-item",
                 { opacity: 0, y: 30 },
                 { opacity: 1, y: 0, stagger: 0.05, duration: 0.6, ease: "power2.out" }
             );
@@ -169,7 +169,7 @@ const Home = () => {
                     });
                 }
             }
-            
+
             gsap.set(deviceRef.current, { rotationY: -10, rotationX: 5 });
 
             gsap.from(".hero-content-reveal", {
@@ -180,7 +180,7 @@ const Home = () => {
                 delay: 0.6,
                 ease: "power2.out"
             });
-            
+
             gsap.from(deviceRef.current, {
                 x: 100,
                 opacity: 0,
@@ -219,7 +219,7 @@ const Home = () => {
                     xTo(0);
                     yTo(0);
                 };
-                
+
                 btn.addEventListener('mousemove', mouseEnter);
                 btn.addEventListener('mouseleave', mouseLeave);
             }
@@ -228,7 +228,7 @@ const Home = () => {
                 if (!deviceRef.current) return;
                 const xPct = (e.clientX / window.innerWidth) - 0.5;
                 const yPct = (e.clientY / window.innerHeight) - 0.5;
-                
+
                 gsap.to(deviceRef.current, {
                     rotationY: xPct * 10,
                     rotationX: -yPct * 10,
@@ -268,12 +268,12 @@ const Home = () => {
 
     return (
         <div className="relative min-h-screen bg-transparent transition-colors duration-500 overflow-x-hidden font-sans selection:text-[var(--accent)] selection:bg-[var(--accent)]/20">
-            
+
             {/* Global Campus Fixed Backdrop */}
             <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-                <img 
-                    src={graduatingStudentsImg} 
-                    alt="Graduating Students Background" 
+                <img
+                    src={graduatingStudentsImg}
+                    alt="Graduating Students Background"
                     className="w-full h-full object-cover opacity-60 dark:opacity-40"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-[var(--bg-primary)] dark:via-black/60 dark:to-[var(--bg-primary)]"></div>
@@ -281,32 +281,32 @@ const Home = () => {
 
             {/* HERO SECTION */}
             <section ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-start pt-32 pb-20 px-6 sm:px-12 overflow-hidden hero-sassy z-10">
-                
+
                 {/* Background Aesthetics */}
                 <div className="absolute inset-0 max-w-[100vw] overflow-hidden pointer-events-none">
-                     {/* Light Beams */}
-                     <div className="light-beam absolute top-0 left-[-20%] w-[1px] h-[150vh] bg-gradient-to-b from-transparent via-emerald-500/20 to-transparent rotate-45 blur-[1px]"></div>
-                     <div className="light-beam absolute top-[-30%] left-0 w-[1px] h-[150vh] bg-gradient-to-b from-transparent via-white/10 to-transparent rotate-[30deg] blur-[2px]"></div>
-                     <div className="light-beam absolute top-[10%] right-[-10%] w-[1px] h-[150vh] bg-gradient-to-b from-transparent via-emerald-400/10 to-transparent -rotate-[15deg] blur-[1px]"></div>
-                     
-                     {/* Spotlight Corner Lights */}
-                     <div className="absolute top-[-15%] left-[-15%] w-[550px] h-[550px] bg-[var(--accent)]/35 rounded-full blur-[130px]"></div>
-                     <div className="absolute top-[-15%] right-[-15%] w-[550px] h-[550px] bg-[var(--accent-secondary)]/35 rounded-full blur-[130px]"></div>
+                    {/* Light Beams */}
+                    <div className="light-beam absolute top-0 left-[-20%] w-[1px] h-[150vh] bg-gradient-to-b from-transparent via-emerald-500/20 to-transparent rotate-45 blur-[1px]"></div>
+                    <div className="light-beam absolute top-[-30%] left-0 w-[1px] h-[150vh] bg-gradient-to-b from-transparent via-white/10 to-transparent rotate-[30deg] blur-[2px]"></div>
+                    <div className="light-beam absolute top-[10%] right-[-10%] w-[1px] h-[150vh] bg-gradient-to-b from-transparent via-emerald-400/10 to-transparent -rotate-[15deg] blur-[1px]"></div>
 
-                     {/* Subtle Glows */}
-                     <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px] animate-pulse"></div>
-                     <div className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-amber-500/5 rounded-full blur-[120px]"></div>
+                    {/* Spotlight Corner Lights */}
+                    <div className="absolute top-[-15%] left-[-15%] w-[550px] h-[550px] bg-[var(--accent)]/35 rounded-full blur-[130px]"></div>
+                    <div className="absolute top-[-15%] right-[-15%] w-[550px] h-[550px] bg-[var(--accent-secondary)]/35 rounded-full blur-[130px]"></div>
+
+                    {/* Subtle Glows */}
+                    <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px] animate-pulse"></div>
+                    <div className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-amber-500/5 rounded-full blur-[120px]"></div>
                 </div>
 
                 {/* 1. TOP SECTION: Typography & Actions (Centered) */}
                 <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto mb-12">
                     <h1 id="hero-headline" className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tighter text-slate-900 dark:text-white leading-[1.05] mb-8">
-                        Campus Exchange,<br/>
+                        Campus Exchange,<br />
                         <span className="text-slate-500 dark:text-[#999]">Re-imagined.</span>
                     </h1>
-                    
+
                     <p className="hero-content-reveal text-lg sm:text-xl text-slate-600 dark:text-[#888] max-w-2xl font-medium leading-relaxed mb-10">
-                        A premium, secure secondary market designed exclusively for campus residents. 
+                        A premium, secure secondary market designed exclusively for campus residents.
                         List, swap, and acquire gear instantly with zero commission.
                     </p>
 
@@ -314,7 +314,7 @@ const Home = () => {
                     <div className="hero-content-reveal w-full max-w-xl mb-6 relative">
                         <div className="flex items-center bg-[var(--bg-surface)]/80 dark:bg-[var(--bg-surface)]/60 backdrop-blur-md border border-[var(--border-color)] rounded-3xl px-5 py-4 shadow-xl focus-within:ring-2 focus-within:ring-[var(--accent)] transition-all">
                             <FiSearch className="text-slate-400 text-2xl mr-4" />
-                            <input 
+                            <input
                                 type="text"
                                 placeholder="Search electronics, course materials, hostels swap..."
                                 value={searchQuery}
@@ -326,7 +326,7 @@ const Home = () => {
                         <div className="flex flex-wrap gap-2.5 justify-center mt-4.5 text-xs">
                             <span className="font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest text-[10px] mt-1">Trending:</span>
                             {getTrendingTags().map((tag) => (
-                                <button 
+                                <button
                                     key={tag}
                                     onClick={() => handleTagClick(tag)}
                                     className="cursor-pointer bg-[var(--bg-surface)] border border-[var(--border-color)] px-3 py-1 rounded-full text-slate-600 dark:text-slate-400 hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all font-semibold shadow-sm"
@@ -338,16 +338,16 @@ const Home = () => {
                     </div>
 
                     <div className="hero-content-reveal flex flex-col sm:flex-row items-center gap-5 mt-4">
-                        <Link 
-                            to="/items" 
+                        <Link
+                            to="/items"
                             ref={primaryBtnRef}
                             className="w-48 py-4 btn-sassy text-lg flex items-center justify-center active:scale-95 transition-transform"
                         >
                             Buy Now
                         </Link>
 
-                        <Link 
-                            to={user ? "/items/create" : "/login"} 
+                        <Link
+                            to={user ? "/items/create" : "/login"}
                             className="w-48 py-4 rounded-full border border-[var(--border-color)] bg-white/90 text-text-primary dark:bg-[var(--bg-surface)]/80 dark:text-white font-bold text-lg hover:bg-[var(--bg-primary)] dark:hover:bg-[var(--bg-surface)]/95 transition-colors duration-300 flex items-center justify-center active:scale-95 transition-transform"
                         >
                             Sell Item
@@ -357,31 +357,30 @@ const Home = () => {
 
                 {/* 2. BOTTOM SECTION: Tablet Mockup */}
                 <div className="relative z-10 w-full max-w-[85vw] perspective-1000 px-4 mt-8">
-                    
+
                     {/* Upward Spotlight source directly above the picture panel */}
                     <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[75%] h-[150px] bg-gradient-to-t from-[var(--accent)]/20 via-[var(--accent)]/5 to-transparent blur-[50px] pointer-events-none rounded-[100%] z-20"></div>
 
-                    <div 
-                        ref={deviceRef} 
+                    <div
+                        ref={deviceRef}
                         className="relative w-full aspect-[2/1] bg-black rounded-[24px] md:rounded-[32px] border-[6px] md:border-[12px] border-slate-900 dark:border-white/10 shadow-2xl shadow-slate-950/10 overflow-hidden transform-style-3d group"
                     >
-                         {/* Gloss Reflection */}
-                         <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent z-20 pointer-events-none mix-blend-overlay"></div>
+                        {/* Gloss Reflection */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent z-20 pointer-events-none mix-blend-overlay"></div>
 
                         {/* Image Slider */}
                         <div className="absolute inset-0 z-10 bg-black">
                             {images.map((img, index) => (
-                                <div 
-                                    key={index} 
-                                    className={`absolute inset-0 transition-all duration-[1500ms] ease-out ${
-                                        index === currentImage 
-                                        ? 'opacity-100 scale-100' 
+                                <div
+                                    key={index}
+                                    className={`absolute inset-0 transition-all duration-[1500ms] ease-out ${index === currentImage
+                                        ? 'opacity-100 scale-100'
                                         : 'opacity-0 scale-105'
-                                    }`}
+                                        }`}
                                 >
-                                    <img 
-                                        src={img} 
-                                        alt="App Interface" 
+                                    <img
+                                        src={img}
+                                        alt="App Interface"
                                         className="w-full h-full object-cover opacity-80"
                                     />
                                     <div className="absolute inset-0 bg-black/30"></div>
@@ -389,16 +388,16 @@ const Home = () => {
                             ))}
                         </div>
 
-                         {/* Floating Stats / Interaction Hints */}
+                        {/* Floating Stats / Interaction Hints */}
                         <div className="absolute bottom-8 left-8 z-30 hidden md:flex flex-col gap-2">
-                             <div className="px-4 py-2 bg-white/90 text-slate-900 dark:bg-black/60 dark:text-white backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-lg font-bold flex items-center gap-3 shadow-lg">
-                                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                                 Live Market Activity
-                             </div>
+                            <div className="px-4 py-2 bg-white/90 text-slate-900 dark:bg-black/60 dark:text-white backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-lg font-bold flex items-center gap-3 shadow-lg">
+                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                Live Market Activity
+                            </div>
                         </div>
 
                     </div>
-                    
+
                     {/* Shadow/Glow under device */}
                     <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[80%] h-32 bg-emerald-500/10 blur-[100px] rounded-[100%] pointer-events-none"></div>
                 </div>
@@ -416,7 +415,7 @@ const Home = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    
+
                     {/* CARD 1: Intelligent Discovery */}
                     <div className="bento-box glass-panel border border-[var(--border-color)] rounded-[32px] p-8 hover:shadow-xl hover:border-[var(--accent)]/30 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between relative overflow-hidden group">
                         <div className="relative z-10">
@@ -517,8 +516,8 @@ const Home = () => {
                     <button
                         onClick={() => setSelectedCategory("")}
                         className={`category-btn cursor-pointer px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all border ${selectedCategory === ""
-                                ? 'bg-[var(--accent)] text-white border-transparent shadow-md'
-                                : 'bg-[var(--bg-surface)]/80 text-slate-600 border-[var(--border-color)] hover:bg-[var(--bg-primary)]'
+                            ? 'bg-[var(--accent)] text-white border-transparent shadow-md'
+                            : 'bg-[var(--bg-surface)]/80 text-slate-600 border-[var(--border-color)] hover:bg-[var(--bg-primary)]'
                             }`}
                     >
                         All Assets
@@ -528,8 +527,8 @@ const Home = () => {
                             key={cat.key}
                             onClick={() => setSelectedCategory(cat.key)}
                             className={`category-btn cursor-pointer px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all border ${selectedCategory.toLowerCase() === cat.key.toLowerCase()
-                                    ? 'bg-[var(--accent)] text-white border-transparent shadow-md'
-                                    : 'bg-[var(--bg-surface)]/80 text-slate-600 border-[var(--border-color)] hover:bg-[var(--bg-primary)]'
+                                ? 'bg-[var(--accent)] text-white border-transparent shadow-md'
+                                : 'bg-[var(--bg-surface)]/80 text-slate-600 border-[var(--border-color)] hover:bg-[var(--bg-primary)]'
                                 }`}
                         >
                             {cat.name}
@@ -595,15 +594,15 @@ const Home = () => {
             </section>
 
             {/* Scroll-Responsive Neon Spotlight Orb that moves vertically on mouse scrolling */}
-            <div 
+            <div
                 className="absolute w-[450px] h-[450px] bg-gradient-to-tr from-emerald-500/10 via-[var(--accent)]/10 to-amber-500/10 rounded-full blur-[110px] pointer-events-none transition-all duration-300 ease-out z-0"
                 style={{ top: `${scrollProgress * 85}%`, left: '15%' }}
             ></div>
 
             {/* Dynamic Floating Blobs for Lower Page Sections */}
             <div className="absolute inset-x-0 bottom-0 top-[40%] overflow-hidden pointer-events-none z-0">
-                 <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-[var(--accent)]/5 rounded-full blur-[120px] animate-blob-1"></div>
-                 <div className="absolute bottom-[30%] right-[-10%] w-[550px] h-[550px] bg-[var(--accent-secondary)]/5 rounded-full blur-[140px] animate-blob-2"></div>
+                <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-[var(--accent)]/5 rounded-full blur-[120px] animate-blob-1"></div>
+                <div className="absolute bottom-[30%] right-[-10%] w-[550px] h-[550px] bg-[var(--accent-secondary)]/5 rounded-full blur-[140px] animate-blob-2"></div>
             </div>
 
         </div>
