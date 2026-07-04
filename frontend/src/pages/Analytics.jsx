@@ -3,6 +3,22 @@ import api from "../utils/api";
 import { FiTrendingUp, FiAward, FiPieChart, FiCpu, FiUser, FiStar, FiChevronRight, FiZap, FiCheckCircle } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 
+const getImageUrl = (url) => {
+  if (!url || url === "null" || url === "undefined") return "";
+  if (url.includes("localhost:") || url.includes("127.0.0.1:")) {
+    try {
+      const parsedUrl = new URL(url);
+      const backendBaseUrl = import.meta.env.VITE_SOCKET_URL;
+      if (backendBaseUrl) {
+        return `${backendBaseUrl}${parsedUrl.pathname}`;
+      }
+    } catch (e) {
+      return url;
+    }
+  }
+  return url;
+};
+
 const Analytics = () => {
   const { isAuthenticated } = useAuth();
 
@@ -244,9 +260,9 @@ const Analytics = () => {
                             <td className="py-4 px-4">
                               <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-full bg-[#f4ead2] dark:bg-[var(--bg-surface)] text-[#8b6d48] flex items-center justify-center font-bold text-sm overflow-hidden border border-border-color">
-                                  {seller.image && !imageErrors[seller._id] ? (
+                                  {getImageUrl(seller.image) && !imageErrors[seller._id] ? (
                                     <img 
-                                      src={seller.image} 
+                                      src={getImageUrl(seller.image)} 
                                       alt={seller.name} 
                                       className="w-full h-full object-cover" 
                                       onError={() => setImageErrors(prev => ({ ...prev, [seller._id]: true }))}
