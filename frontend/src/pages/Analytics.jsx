@@ -1,23 +1,7 @@
 import { useState, useEffect } from "react";
-import api from "../utils/api";
+import api, { getImageUrl } from "../utils/api";
 import { FiTrendingUp, FiAward, FiPieChart, FiCpu, FiUser, FiStar, FiChevronRight, FiZap, FiCheckCircle } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
-
-const getImageUrl = (url) => {
-  if (!url || url === "null" || url === "undefined") return "";
-  if (url.includes("localhost:") || url.includes("127.0.0.1:")) {
-    try {
-      const parsedUrl = new URL(url);
-      const backendBaseUrl = import.meta.env.VITE_SOCKET_URL;
-      if (backendBaseUrl) {
-        return `${backendBaseUrl}${parsedUrl.pathname}`;
-      }
-    } catch (e) {
-      return url;
-    }
-  }
-  return url;
-};
 
 const Analytics = () => {
   const { isAuthenticated } = useAuth();
