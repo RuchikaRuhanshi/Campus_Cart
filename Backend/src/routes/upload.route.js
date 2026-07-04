@@ -8,5 +8,8 @@ const router = express.Router();
 // Upload route - requires authentication
 router.post('/', authMiddleware, uploadImages);
 
+// Public upload route - for profile picture uploads during registration
+router.post('/public', uploadImages);
+
 export default router;
  

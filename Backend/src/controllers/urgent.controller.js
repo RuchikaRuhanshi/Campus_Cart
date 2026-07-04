@@ -29,7 +29,7 @@ export const createUrgentRequest = async (req, res) => {
 export const getAllUrgentRequests = async (req, res) => {
   try {
     const requests = await UrgentRequest.find({ resolved: false })
-      .populate("user", "name collegeName branch image mobileNo location")
+      .populate("user", "name email collegeName branch image mobileNo location")
       .sort({ createdAt: -1 });
 
     res.status(200).json({

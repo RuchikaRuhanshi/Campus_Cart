@@ -16,6 +16,8 @@ import EditItem from "./pages/EditItem.jsx";
 import OrderDetail from "./pages/OrderDetail.jsx";
 import UrgentFeed from "./pages/UrgentFeed.jsx";
 import Heatmap from "./pages/Heatmap.jsx";
+import Analytics from "./pages/Analytics.jsx";
+import AICopilot from "./components/AICopilot.jsx";
 
 // ... imports
 import { ThemeProvider } from "./context/ThemeContext";
@@ -66,7 +68,9 @@ function App() {
         <Route path="/order/:id" element={<ProtectedRoute><OrderDetail /></ProtectedRoute>} />
         <Route path="/urgent" element={<UrgentFeed />} />
         <Route path="/heatmap" element={<Heatmap />} />
+        <Route path="/analytics" element={<Analytics />} />
       </Routes>
+      <AICopilot />
       </NotificationProvider>
     </ThemeProvider>
   );
@@ -74,4 +78,3 @@ function App() {
 // ... export
 
 export default App;
- 

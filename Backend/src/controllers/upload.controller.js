@@ -6,10 +6,33 @@ import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
+
 dotenv.config();
 
-// Configure Cloudinary (Explicit parse for robustness)
-if (process.env.CLOUDINARY_URL) {
+// Ensure local uploads directory exists
+const localUploadsDir = 'uploads';
+if (!fs.existsSync(localUploadsDir)) {
+  fs.mkdirSync(localUploadsDir, { recursive: true });
+}
+
+// Configure Local Disk Storage
+const diskStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+let storage;
+const useCloudinary = !!process.env.CLOUDINARY_URL;
+
+if (useCloudinary) {
+  // Configure Cloudinary (Explicit parse for robustness)
   const matches = process.env.CLOUDINARY_URL.match(/^cloudinary:\/\/([^:]+):([^@]+)@(.+)$/);
   if (matches) {
     cloudinary.config({
@@ -18,16 +41,17 @@ if (process.env.CLOUDINARY_URL) {
       api_secret: matches[2]
     });
   }
+  
+  storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: 'campus_mart_uploads',
+      allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+    },
+  });
+} else {
+  storage = diskStorage;
 }
-
-// Configure Storage
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'campus_mart_uploads',
-    allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
-  },
-});
 
 // Init Upload
 const upload = multer({ 
@@ -44,8 +68,17 @@ const uploadImages = (req, res) => {
       if (!req.files || req.files.length === 0) {
         return res.status(400).json({ success: false, message: 'No file selected' });
       } else {
-        // Cloudinary returns the full URL in `path` (or `secure_url` on the file object)
-        const fileUrls = req.files.map(file => file.path);
+        const fileUrls = req.files.map(file => {
+          if (useCloudinary) {
+            return file.path;
+          } else {
+            const protocol = req.protocol;
+            const host = req.get('host');
+            // Normalize path to use forward slashes
+            const filename = file.filename;
+            return `${protocol}://${host}/uploads/${filename}`;
+          }
+        });
         
         return res.status(200).json({
           success: true,

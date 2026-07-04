@@ -3,6 +3,12 @@ import api from "../utils/api";
 import { FiClock, FiPlus, FiAlertCircle, FiMessageSquare, FiX, FiCheck } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 
+const getUserId = (u) => {
+  if (!u) return null;
+  if (typeof u === 'string') return u;
+  return u._id || u.id;
+};
+
 const UrgentFeed = () => {
   const { isAuthenticated, user: currentUser } = useAuth();
   const [requests, setRequests] = useState([]);
@@ -160,7 +166,7 @@ const UrgentFeed = () => {
                   </div>
 
                   <div className="flex flex-col gap-2 self-stretch sm:self-center justify-center">
-                    {currentUser && currentUser.id === req.user?._id ? (
+                    {currentUser && getUserId(currentUser) === getUserId(req.user) ? (
                       <button 
                         onClick={() => handleResolve(req._id)}
                         className="cursor-pointer px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full text-sm font-bold flex items-center gap-2 shadow-sm transition-colors"
@@ -276,12 +282,22 @@ const UrgentFeed = () => {
                 <div className="space-y-3">
                   <div>
                     <label className="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-1">Contact Student</label>
-                    <a 
-                      href={`tel:${helpRequest.user?.mobileNo}`} 
-                      className="block w-full text-center py-3 bg-[var(--accent)] hover:opacity-95 text-white font-bold rounded-2xl shadow-sm transition-opacity"
-                    >
-                      Call / WhatsApp: {helpRequest.user?.mobileNo}
-                    </a>
+                    <div className="grid grid-cols-2 gap-3">
+                      <a 
+                        href={`tel:${helpRequest.user?.mobileNo}`} 
+                        className="block text-center py-3 bg-[var(--accent)] hover:opacity-95 text-white font-bold rounded-2xl shadow-sm transition-opacity text-sm truncate px-1"
+                      >
+                        Call: {helpRequest.user?.mobileNo}
+                      </a>
+                      <a 
+                        href={`https://wa.me/${helpRequest.user?.mobileNo?.startsWith('+') ? helpRequest.user.mobileNo.replace('+', '') : (helpRequest.user?.mobileNo?.length === 10 ? '91' + helpRequest.user.mobileNo : helpRequest.user?.mobileNo)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block text-center py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-sm transition-colors text-sm"
+                      >
+                        WhatsApp
+                      </a>
+                    </div>
                   </div>
                   <div>
                     <label className="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-1">Send Email</label>

@@ -15,7 +15,8 @@ import {
   FiMoon,
   FiBell,
   FiMapPin,
-  FiClock
+  FiClock,
+  FiTrendingUp
 } from "react-icons/fi";
 import { useTheme } from "../context/ThemeContext";
 import { useNotification } from "../context/NotificationContext";
@@ -47,33 +48,52 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="hidden lg:flex items-center justify-center flex-1 space-x-6">
+          {/* SIMPLIFIED DESKTOP NAVIGATION LINKS */}
+          <div className="hidden md:flex items-center justify-center flex-1 space-x-1">
             <NavLinks mobile={false} isActive={isActive} user={user} setOpen={setOpen} />
           </div>
 
-          <div className="flex items-center gap-2 ml-auto">
+          <div className="flex items-center gap-3 ml-auto">
             <NotificationIcon unreadCount={unreadCount} notifications={notifications} showNotifications={showNotifications} setShowNotifications={setShowNotifications} />
             <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
-            <div className="hidden md:flex items-center gap-2">
-              {!user && (
-                <>
-                  <Link to="/login" className="rounded-full px-4 py-2 text-sm font-bold text-text-secondary hover:text-text-primary transition">
-                    Login
-                  </Link>
-                  <Link to="/register" className="btn-sassy text-xs uppercase tracking-wider font-extrabold px-5 py-2.5 shadow-sm">
-                    Sign Up
-                  </Link>
-                </>
-              )}
-            </div>
 
-            <button
-              onClick={() => setOpen(true)}
-              className="md:hidden p-2 text-text-primary dark:text-white hover:bg-[rgba(139,109,72,0.12)] dark:hover:bg-[rgba(184,177,139,0.15)] rounded-lg transition"
-              aria-label="Open menu"
-            >
-              <FiMenu size={24} />
-            </button>
+            {/* UNIFIED DASHBOARD SLIDE TOGGLE */}
+            {user ? (
+              <button
+                onClick={() => setOpen(true)}
+                className="cursor-pointer flex items-center gap-2 pl-1 pr-3 py-1 bg-[var(--bg-surface)]/80 hover:bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-full transition-all duration-300"
+                title="Open Dashboard"
+              >
+                {user.image ? (
+                  <img src={user.image} alt="Profile" className="w-8 h-8 rounded-full object-cover" />
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-[var(--accent)]/15 text-[var(--accent)] flex items-center justify-center text-sm font-bold">
+                    {user.name ? user.name[0].toUpperCase() : "U"}
+                  </div>
+                )}
+                <span className="hidden lg:inline text-sm font-bold text-slate-800 dark:text-slate-200">Dashboard</span>
+              </button>
+            ) : (
+              <div className="hidden md:flex items-center gap-2">
+                <Link to="/login" className="rounded-full px-4 py-2 text-sm font-bold text-text-secondary hover:text-text-primary transition">
+                  Login
+                </Link>
+                <Link to="/register" className="btn-sassy text-xs uppercase tracking-wider font-extrabold px-5 py-2.5 shadow-sm">
+                  Sign Up
+                </Link>
+              </div>
+            )}
+
+            {/* Mobile menu toggle when not logged in */}
+            {!user && (
+              <button
+                onClick={() => setOpen(true)}
+                className="md:hidden p-2 text-text-primary dark:text-white hover:bg-[rgba(139,109,72,0.12)] dark:hover:bg-[rgba(184,177,139,0.15)] rounded-lg transition"
+                aria-label="Open menu"
+              >
+                <FiMenu size={24} />
+              </button>
+            )}
           </div>
         </div>
       </nav>
@@ -82,25 +102,60 @@ const Navbar = () => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300" onClick={() => setOpen(false)} />
       )}
 
-      <aside className={`fixed top-0 right-0 h-full w-[82%] max-w-sm bg-[var(--bg-surface)] z-50 transform ${open ? "translate-x-0" : "translate-x-full"} transition-transform duration-500 ease-out shadow-2xl border-l border-[var(--border-color)]`}>
+      {/* DYNAMIC SIDE DASHBOARD DRAWER */}
+      <aside className={`fixed top-0 right-0 h-full w-[88%] max-w-sm bg-[var(--bg-surface)] z-50 transform ${open ? "translate-x-0" : "translate-x-full"} transition-transform duration-500 ease-out shadow-2xl border-l border-[var(--border-color)]`}>
         <div className="flex flex-col h-full">
           <div className="px-6 h-20 flex items-center justify-between border-b border-[var(--border-color)]">
-            <span className="font-bold text-lg text-slate-900 dark:text-white">Menu</span>
-            <button onClick={() => setOpen(false)} className="p-2 rounded-full hover:bg-[var(--bg-primary)] transition text-slate-500 dark:text-slate-300" aria-label="Close menu">
+            <span className="font-bold text-lg text-slate-900 dark:text-white font-heading">Campus Dashboard</span>
+            <button onClick={() => setOpen(false)} className="cursor-pointer p-2 rounded-full hover:bg-[var(--bg-primary)] transition text-slate-500 dark:text-slate-300" aria-label="Close menu">
               <FiX size={24} />
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-6 space-y-2">
-            <NavLinks mobile={true} isActive={isActive} user={user} setOpen={setOpen} />
+          <div className="flex-1 overflow-y-auto p-6 space-y-5" data-lenis-prevent>
+            {/* User Profile Summary inside Slider */}
+            {user && (
+              <div className="p-4 bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-2xl flex items-center gap-3">
+                {user.image ? (
+                  <img src={user.image} alt="Profile" className="w-12 h-12 rounded-full object-cover border border-[var(--accent)]" />
+                ) : (
+                  <div className="w-12 h-12 rounded-full bg-[var(--accent)]/15 text-[var(--accent)] flex items-center justify-center text-lg font-black">
+                    {user.name ? user.name[0].toUpperCase() : "U"}
+                  </div>
+                )}
+                <div>
+                  <h4 className="font-bold text-slate-950 dark:text-white leading-tight">{user.name}</h4>
+                  <p className="text-xs text-slate-400 dark:text-slate-500 truncate max-w-48">{user.email}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Direct Sell Link Card in Dashboard */}
+            <div className="p-4 bg-gradient-to-br from-[var(--accent)]/10 to-[var(--accent-secondary)]/5 border border-[var(--accent)]/20 rounded-2xl">
+              <h5 className="font-bold text-sm text-[var(--accent)] mb-1">List items instantly</h5>
+              <p className="text-xs text-slate-500 mb-3">Sell gadgets, textbooks, room swaps, or study materials to peers.</p>
+              <Link
+                to={user ? "/items/create" : "/login"}
+                onClick={() => setOpen(false)}
+                className="block text-center bg-[var(--accent)] hover:bg-[var(--accent-secondary)] text-white text-xs font-bold py-2 rounded-xl transition"
+              >
+                Create Listing
+              </Link>
+            </div>
+
+            <div className="space-y-1">
+              <span className="block px-4 text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-2">Navigations</span>
+              <NavLinks mobile={true} isActive={isActive} user={user} setOpen={setOpen} />
+            </div>
+
             <div className="mt-4 border-t border-[var(--border-color)] pt-4">
               {user ? (
-                <button onClick={() => { setOpen(false); logout(); }} className="w-full rounded-3xl bg-red-50 text-red-600 dark:bg-red-950/20 dark:text-red-300 px-4 py-3 font-semibold hover:bg-red-100 transition">
-                  Logout
+                <button onClick={() => { setOpen(false); logout(); }} className="cursor-pointer w-full rounded-full bg-red-50 text-red-600 dark:bg-red-950/20 dark:text-red-300 px-4 py-3 font-semibold hover:bg-red-100 transition">
+                  Logout Account
                 </button>
               ) : (
                 <div className="space-y-3">
-                  <Link to="/login" onClick={() => setOpen(false)} className="block rounded-3xl px-4 py-3 text-center bg-[var(--bg-primary)] text-text-primary dark:text-white font-semibold hover:opacity-90 transition">
+                  <Link to="/login" onClick={() => setOpen(false)} className="block rounded-full px-4 py-3 text-center bg-[var(--bg-primary)] text-text-primary dark:text-white font-semibold hover:opacity-90 transition">
                     Login
                   </Link>
                   <Link to="/register" onClick={() => setOpen(false)} className="block btn-sassy text-center uppercase tracking-wider text-xs font-extrabold w-full py-3.5">
@@ -113,7 +168,7 @@ const Navbar = () => {
         </div>
       </aside>
 
-      <div className="h-20" />
+      <div className="h-16 sm:h-20" />
     </>
   );
 };
@@ -184,7 +239,7 @@ const NotificationIcon = ({ unreadCount, notifications, showNotifications, setSh
 );
 
 const NavLinks = ({ mobile = false, isActive, user, setOpen }) => {
-  const linkBaseClass = mobile 
+  const linkBaseClass = mobile
     ? "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200"
     : "relative px-3 py-2 text-base font-semibold transition-colors duration-200";
 
@@ -196,6 +251,49 @@ const NavLinks = ({ mobile = false, isActive, user, setOpen }) => {
     ? "text-text-secondary hover:bg-[var(--bg-primary)] hover:text-text-primary"
     : "text-text-secondary hover:text-text-primary";
 
+  if (!mobile) {
+    // Desktop NavLinks: Home, Urgent Feed, Market
+    return (
+      <div className="flex items-center gap-6">
+        <Link
+          to="/"
+          className={`${linkBaseClass} ${isActive("/") ? activeClass : inactiveClass}`}
+        >
+          <span>Home</span>
+          {isActive("/") && <DesktopActiveIndicator />}
+        </Link>
+
+        <Link
+          to="/urgent"
+          className={`${linkBaseClass} ${isActive("/urgent") ? activeClass : inactiveClass}`}
+        >
+          <div className="flex items-center gap-1.5 font-semibold">
+            <span className="inline-flex w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+            <span>Urgent Feed</span>
+          </div>
+          {isActive("/urgent") && <DesktopActiveIndicator />}
+        </Link>
+
+        <Link
+          to="/items"
+          className={`${linkBaseClass} ${isActive("/items") ? activeClass : inactiveClass}`}
+        >
+          <span>Market</span>
+          {isActive("/items") && <DesktopActiveIndicator />}
+        </Link>
+
+        <Link
+          to="/analytics"
+          className={`${linkBaseClass} ${isActive("/analytics") ? activeClass : inactiveClass}`}
+        >
+          <span>Stats</span>
+          {isActive("/analytics") && <DesktopActiveIndicator />}
+        </Link>
+      </div>
+    );
+  }
+
+  // Sliding Side Dashboard Drawer List
   return (
     <>
       <Link
@@ -203,11 +301,17 @@ const NavLinks = ({ mobile = false, isActive, user, setOpen }) => {
         className={`${linkBaseClass} ${isActive("/") ? activeClass : inactiveClass}`}
         onClick={() => setOpen(false)}
       >
-        <div className="flex items-center gap-2">
-          {mobile && <FiHome />}
-          <span>Home</span>
-        </div>
-        {!mobile && isActive("/") && <DesktopActiveIndicator />}
+        <FiHome />
+        <span>Home</span>
+      </Link>
+
+      <Link
+        to="/items"
+        className={`${linkBaseClass} ${isActive("/items") ? activeClass : inactiveClass}`}
+        onClick={() => setOpen(false)}
+      >
+        <FiBox />
+        <span>Market Catalog</span>
       </Link>
 
       <Link
@@ -215,11 +319,8 @@ const NavLinks = ({ mobile = false, isActive, user, setOpen }) => {
         className={`${linkBaseClass} ${isActive("/urgent") ? activeClass : inactiveClass}`}
         onClick={() => setOpen(false)}
       >
-        <div className="flex items-center gap-2">
-          {mobile ? <FiClock /> : <span className="inline-flex w-1.5 h-1.5 rounded-full bg-red-500 mr-1 animate-pulse" />}
-          <span>Urgent Feed</span>
-        </div>
-        {!mobile && isActive("/urgent") && <DesktopActiveIndicator />}
+        <FiClock />
+        <span>Urgent Feed</span>
       </Link>
 
       <Link
@@ -227,37 +328,28 @@ const NavLinks = ({ mobile = false, isActive, user, setOpen }) => {
         className={`${linkBaseClass} ${isActive("/heatmap") ? activeClass : inactiveClass}`}
         onClick={() => setOpen(false)}
       >
-        <div className="flex items-center gap-2">
-          {mobile && <FiMapPin />}
-          <span>Campus Map</span>
-        </div>
-        {!mobile && isActive("/heatmap") && <DesktopActiveIndicator />}
+        <FiMapPin />
+        <span>Campus Map</span>
       </Link>
 
-      {user ? (
+      <Link
+        to="/analytics"
+        className={`${linkBaseClass} ${isActive("/analytics") ? activeClass : inactiveClass}`}
+        onClick={() => setOpen(false)}
+      >
+        <FiTrendingUp />
+        <span>Stats & AI</span>
+      </Link>
+
+      {user && (
         <>
           <Link
             to="/orders"
             className={`${linkBaseClass} ${isActive("/orders") ? activeClass : inactiveClass}`}
             onClick={() => setOpen(false)}
           >
-            <div className="flex items-center gap-2">
-              {mobile && <FiShoppingBag />}
-              <span>Orders</span>
-            </div>
-            {!mobile && isActive("/orders") && <DesktopActiveIndicator />}
-          </Link>
-
-          <Link
-            to="/items"
-            className={`${linkBaseClass} ${isActive("/items") ? activeClass : inactiveClass}`}
-            onClick={() => setOpen(false)}
-          >
-            <div className="flex items-center gap-2">
-              {mobile && <FiBox />}
-              <span>Market</span>
-            </div>
-            {!mobile && isActive("/items") && <DesktopActiveIndicator />}
+            <FiShoppingBag />
+            <span>My Orders</span>
           </Link>
 
           <Link
@@ -265,54 +357,26 @@ const NavLinks = ({ mobile = false, isActive, user, setOpen }) => {
             className={`${linkBaseClass} ${isActive("/favorite") ? activeClass : inactiveClass}`}
             onClick={() => setOpen(false)}
           >
-            <div className="flex items-center gap-2">
-              {mobile && <FiHeart />}
-              <span>Favorites</span>
-            </div>
-            {!mobile && isActive("/favorite") && <DesktopActiveIndicator />}
+            <FiHeart />
+            <span>Favorites</span>
           </Link>
-
-          <div className={`h-6 w-px bg-slate-200 dark:bg-white/10 mx-2 ${mobile ? 'hidden' : 'block'}`}></div>
 
           <Link
             to="/my-account"
-            className={ mobile 
-              ? `${linkBaseClass} ${isActive("/my-account") ? activeClass : inactiveClass}`
-              : `flex items-center gap-2 pl-1 pr-2 py-1.5 rounded-full transition-all duration-200 border ${isActive("/my-account") ? "border-[var(--accent)]/30 bg-[var(--accent)]/10 text-[var(--accent)]" : "border-transparent hover:bg-[var(--bg-primary)] text-text-secondary"}`
-            }
+            className={`${linkBaseClass} ${isActive("/my-account") ? activeClass : inactiveClass}`}
             onClick={() => setOpen(false)}
           >
-            {user.image ? (
-              <img src={user.image} alt="Profile" className="w-6 h-6 rounded-full object-cover" />
-            ) : (
-              <div className="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs">
-                <FiUser />
-              </div>
-            )}
-            <span className="text-sm font-medium">{user.name || "Profile"}</span>
-          </Link>
-        </>
-      ) : (
-        <>
-          <Link
-            to="/items"
-            className={`${linkBaseClass} ${isActive("/items") ? activeClass : inactiveClass}`}
-            onClick={() => setOpen(false)}
-          >
-            <div className="flex items-center gap-2">
-              {mobile && <FiBox />}
-              <span>Market</span>
-            </div>
-            {!mobile && isActive("/items") && <DesktopActiveIndicator />}
+            <FiUser />
+            <span>My Account</span>
           </Link>
         </>
       )}
     </>
   );
-}
+};
 
 const DesktopActiveIndicator = () => (
   <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[var(--accent)] rounded-full shadow-[0_0_10px_rgba(140,115,72,0.35)]" />
 );
 
-export default Navbar; 
+export default Navbar;

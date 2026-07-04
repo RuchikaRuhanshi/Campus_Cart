@@ -7,7 +7,7 @@ import { useTheme } from "../context/ThemeContext";
 import LocationPicker from "../components/LocationPicker";
 
 const UserAccount = () => {
-  const { user, isAuthenticated, logout, refreshUser } = useAuth();
+  const { user, setUser, isAuthenticated, logout, refreshUser } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [activeTab, setActiveTab] = useState("profile");
   const navigate = useNavigate();
@@ -59,6 +59,7 @@ const UserAccount = () => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
+  const [imageUploading, setImageUploading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -78,7 +79,8 @@ const UserAccount = () => {
       try {
           const res = await api.put("/user/update", formData);
           if (res.data.success) {
-              await refreshUser(); // Update global context
+              setUser(res.data.data);
+              localStorage.setItem("user", JSON.stringify(res.data.data));
               setIsEditing(false);
               alert("Profile updated successfully!");
           }
@@ -253,6 +255,54 @@ const UserAccount = () => {
                     <div className="flex flex-col gap-4">
                         {isEditing ? (
                             <>
+                                <div className="bg-surface dark:bg-[var(--bg-surface)] p-4 rounded-3xl border border-border-color transition-all flex flex-col md:flex-row items-center gap-4">
+                                    <div className="relative w-20 h-20 rounded-full bg-[var(--bg-surface)] dark:bg-[#3e2f1f] border-2 border-[var(--border-color)] overflow-hidden flex items-center justify-center shadow-md">
+                                        {formData.image ? (
+                                            <img src={formData.image} alt="Profile Preview" className="w-full h-full object-cover" />
+                                        ) : (
+                                            <span className="text-[#8b6d48] font-bold text-2xl">{formData.name?.charAt(0)}</span>
+                                        )}
+                                        {imageUploading && (
+                                            <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-xs font-bold">
+                                                ...
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="flex-1 text-center md:text-left">
+                                        <p className="text-xs text-text-secondary uppercase font-bold tracking-wider mb-2">Profile Picture</p>
+                                        <label className="inline-block bg-[#8b6d48] text-white px-4 py-2 rounded-full font-bold text-xs cursor-pointer hover:bg-[#7a5d3f] transition">
+                                            {imageUploading ? "Uploading..." : "Upload New Photo"}
+                                            <input 
+                                                type="file" 
+                                                accept="image/*" 
+                                                className="hidden" 
+                                                disabled={imageUploading}
+                                                onChange={async (e) => {
+                                                    const file = e.target.files[0];
+                                                    if (!file) return;
+                                                    setImageUploading(true);
+                                                    const uploadData = new FormData();
+                                                    uploadData.append("images", file);
+                                                    try {
+                                                        const res = await api.post("/upload", uploadData, {
+                                                            headers: { "Content-Type": "multipart/form-data" }
+                                                        });
+                                                        if (res.data.success) {
+                                                            setFormData(prev => ({ ...prev, image: res.data.data[0] }));
+                                                        } else {
+                                                            alert("Failed to upload image");
+                                                        }
+                                                    } catch (err) {
+                                                        console.error(err);
+                                                        alert("Upload failed");
+                                                    } finally {
+                                                        setImageUploading(false);
+                                                    }
+                                                }}
+                                            />
+                                        </label>
+                                    </div>
+                                </div>
                                 <EditInput label="Full Name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                                 <EditInput label="Mobile Number" value={formData.mobileNo} onChange={e => setFormData({...formData, mobileNo: e.target.value})} />
                                 <EditInput label="College" value={formData.collegeName} onChange={e => setFormData({...formData, collegeName: e.target.value})} />

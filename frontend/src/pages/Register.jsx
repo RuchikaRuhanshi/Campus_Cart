@@ -3,14 +3,17 @@ import api from "../utils/api.js";;
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import LocationPicker from "../components/LocationPicker";
+import { FiCamera } from "react-icons/fi";
 
 const Register = () => {
   const [step, setStep] = useState(1);
+  const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
     mobileNo: "",
+    image: "",
     collegeName: "",
     branch: "",
     yearOfStudy: "",
@@ -82,6 +85,52 @@ const Register = () => {
             <div className="grid gap-4">
               {step === 1 ? (
                 <>
+                  <div className="flex flex-col items-center gap-3 mb-2">
+                    <div className="relative w-24 h-24 rounded-full bg-[var(--bg-surface)] dark:bg-[#3e2f1f] border-2 border-[var(--border-color)] overflow-hidden flex items-center justify-center group shadow-md hover:scale-105 transition-transform duration-200">
+                      {form.image ? (
+                        <img src={form.image} alt="Profile Preview" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="text-text-secondary flex flex-col items-center justify-center gap-1">
+                          <FiCamera size={24} className="text-[#8b6d48]" />
+                          <span className="text-[10px] uppercase font-bold tracking-wider text-text-secondary">Add Photo</span>
+                        </div>
+                      )}
+                      {uploading && (
+                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-xs font-bold">
+                          Uploading...
+                        </div>
+                      )}
+                      <label className="absolute inset-0 cursor-pointer bg-black/0 hover:bg-black/20 transition flex items-center justify-center">
+                        <input 
+                          type="file" 
+                          accept="image/*" 
+                          className="hidden" 
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            setUploading(true);
+                            const formData = new FormData();
+                            formData.append("images", file);
+                            try {
+                              const res = await api.post("/upload/public", formData, {
+                                headers: { "Content-Type": "multipart/form-data" }
+                              });
+                              if (res.data.success) {
+                                setForm(prev => ({ ...prev, image: res.data.data[0] }));
+                              } else {
+                                alert("Failed to upload image");
+                              }
+                            } catch (err) {
+                              console.error(err);
+                              alert("Upload failed");
+                            } finally {
+                              setUploading(false);
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
                   <input name="name" placeholder="Enter your full name" value={form.name} onChange={handleChange} className="input-sassy w-full" required />
                   <input name="email" type="email" placeholder="Enter your email" value={form.email} onChange={handleChange} className="input-sassy w-full" required />
                   <input name="mobileNo" placeholder="Enter your phone number" value={form.mobileNo} onChange={handleChange} className="input-sassy w-full" required />

@@ -13,6 +13,7 @@ import reviewRouter from './src/routes/review.route.js';
 import adminRouter from './src/routes/admin.route.js';
 import urgentRouter from './src/routes/urgent.route.js';
 import spotRouter from './src/routes/campusSpot.route.js';
+import analyticsRouter from './src/routes/analytics.route.js';
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { saveChatMessage } from './src/controllers/chat.controller.js';
@@ -115,7 +116,7 @@ io.on("connection", (socket) => {
 
 
 // routes
-// app.use('/uploads', express.static('uploads')); // Removed for Cloudinary
+app.use('/uploads', express.static('uploads'));
 
 // routes
 app.use('/api/user', userRouter);
@@ -129,6 +130,7 @@ app.use("/api/review", reviewRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/urgent", urgentRouter);
 app.use("/api/spots", spotRouter);
+app.use("/api/analytics", analyticsRouter);
 
 
 app.get('/', (req, res) => {
