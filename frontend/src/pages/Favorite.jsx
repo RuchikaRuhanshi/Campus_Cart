@@ -37,7 +37,7 @@ const Favorite = () => {
         <img
           src="https://images.unsplash.com/photo-1523050854-01023f1de670?q=80&w=1200&auto=format"
           alt="Campus architecture"
-          className="w-full h-full object-cover opacity-60"
+          className="w-full h-full object-cover opacity-30"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/85 to-[var(--bg-primary)]"></div>
       </div>
