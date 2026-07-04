@@ -23,7 +23,7 @@ const Login = () => {
         throw new Error('Missing auth token');
       }
       login(user, token);
-      navigate("/", { replace: true });
+      window.location.href = "/";
     } catch (err) {
       const msg = err?.response?.data?.message || err.message || 'Login failed';
       alert(msg);

@@ -49,7 +49,7 @@ const Register = () => {
       const user = res.data?.user || res.data?.data || res.data?.data?.user;
       if (!token) throw new Error('Missing auth token');
       login(user, token);
-      navigate("/", { replace: true });
+      window.location.href = "/";
     } catch (err) {
       const msg = err?.response?.data?.message || err.message || 'Registration failed';
       alert(msg);
