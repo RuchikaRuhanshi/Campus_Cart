@@ -274,3 +274,105 @@ If you are listing a new item, remember to use descriptive titles, set fair pric
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+/**
+ * AI-assisted smart listing helper
+ * Suggests title, category, subcategory, price, and description based on text inputs or filename
+ */
+export const suggestListingInfo = async (req, res) => {
+  try {
+    const { title, fileName } = req.body;
+    
+    let textToAnalyze = "";
+    if (title) textToAnalyze += " " + title;
+    if (fileName) textToAnalyze += " " + fileName;
+    
+    textToAnalyze = textToAnalyze.toLowerCase().trim();
+    
+    // Heuristic Rules
+    let suggestedTitle = title || "";
+    let category = "Other";
+    let subCategory = "General";
+    let price = 500;
+    let description = "Selling this item in good working condition. Ideal for campus students. Open to meetups at the library or hostel lobby.";
+    
+    if (textToAnalyze.match(/(macbook|laptop|dell|hp|lenovo|ipad|computer)/)) {
+      if (!suggestedTitle) suggestedTitle = "Premium Study Laptop";
+      category = "Electronics";
+      subCategory = "Laptops / Computers";
+      price = 35000;
+      description = "Selling my laptop in excellent condition. Used for 2 years for college assignments. Battery health is great, comes with original charger and box.";
+    } else if (textToAnalyze.match(/(phone|iphone|samsung|oneplus|android)/)) {
+      if (!suggestedTitle) suggestedTitle = "Smartphone";
+      category = "Electronics";
+      subCategory = "Mobile Phones";
+      price = 15000;
+      description = "Smartphone in excellent shape. No scratches on screen, always used with a case. Includes charger and original accessories.";
+    } else if (textToAnalyze.match(/(calculator|casio|scientific)/)) {
+      if (!suggestedTitle) suggestedTitle = "Casio Scientific Calculator";
+      category = "Electronics";
+      subCategory = "Calculators / Math";
+      price = 450;
+      description = "Casio Scientific Calculator, perfect for engineering or physics classes. Fully functional with brand new battery.";
+    } else if (textToAnalyze.match(/(book|physics|chemistry|math|textbook|semester|hcv|hc verma|notes|pyq)/)) {
+      if (!suggestedTitle) suggestedTitle = "Semester Course Textbook";
+      category = "Books";
+      subCategory = "Course Materials";
+      price = 250;
+      description = "Textbook in clean condition. No pages missing, very minor pencil markings inside. Extremely helpful for semester exams.";
+    } else if (textToAnalyze.match(/(coat|apron|lab)/)) {
+      if (!suggestedTitle) suggestedTitle = "Unisex Lab Coat";
+      category = "Clothing";
+      subCategory = "Lab Aprons";
+      price = 180;
+      description = "White lab coat / apron, size M. Used only for a few chemistry lab sessions. Freshly washed, no stains.";
+    } else if (textToAnalyze.match(/(cycle|bicycle|hero|atlas|gear cycle)/)) {
+      if (!suggestedTitle) suggestedTitle = "Campus Gear Bicycle";
+      category = "Sports";
+      subCategory = "Bicycles";
+      price = 3200;
+      description = "Campus gear bicycle in great running condition. Comfortable seat, responsive brakes, and tires are in good shape. Perfect for riding to lectures.";
+    } else if (textToAnalyze.match(/(chair|table|study|bed|lamp|furniture)/)) {
+      if (!suggestedTitle) suggestedTitle = "Ergonomic Study Desk / Chair";
+      category = "Furniture";
+      subCategory = "Hostel Essentials";
+      price = 800;
+      description = "Perfect study desk / chair for hostel room. Sturdy build, comfortable, and takes up minimal space.";
+    } else if (textToAnalyze.match(/(tshirt|jacket|hoodie|jeans|clothing|apparel)/)) {
+      if (!suggestedTitle) suggestedTitle = "Campus Hoodie / Apparel";
+      category = "Clothing";
+      subCategory = "Apparel";
+      price = 350;
+      description = "Premium hoodie/apparel in M/L size. Comfortable material, perfect for winters on campus. No wear or tear.";
+    } else if (textToAnalyze.match(/(bat|racket|badminton|football|cricket|sports|fitness)/)) {
+      if (!suggestedTitle) suggestedTitle = "Sports Equipment";
+      category = "Sports";
+      subCategory = "Sports / Fitness";
+      price = 500;
+      description = "Sports gear in great playable condition. Ideal for campus play fields or hostels. Open to quick handovers.";
+    }
+    
+    // Capitalize title if it was generated from fileName
+    if (!title && suggestedTitle) {
+      // clean name from filename
+      suggestedTitle = suggestedTitle
+        .replace(/[\-_]/g, " ")
+        .replace(/\.[^/.]+$/, "") // strip extension
+        .replace(/\b\w/g, c => c.toUpperCase());
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: {
+        title: suggestedTitle,
+        category,
+        subCategory,
+        price,
+        description
+      }
+    });
+  } catch (error) {
+    console.error("Error in suggestListingInfo:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

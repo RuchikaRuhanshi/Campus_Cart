@@ -15,6 +15,32 @@ const SellItem = () => {
     category: "",
     subCategory: "",
   });
+  const [aiAnalyzing, setAiAnalyzing] = useState(false);
+
+  const runAIAssistant = async (titleInput, fileNameInput) => {
+    try {
+      setAiAnalyzing(true);
+      const res = await api.post("/analytics/suggest", { 
+        title: titleInput || formData.title, 
+        fileName: fileNameInput 
+      });
+      if (res.data.success) {
+        const { title, category, subCategory, price, description } = res.data.data;
+        setFormData(prev => ({
+          ...prev,
+          title: title || prev.title,
+          category: category || prev.category,
+          subCategory: subCategory || prev.subCategory,
+          price: price || prev.price,
+          description: description || prev.description
+        }));
+      }
+    } catch (err) {
+      console.error("AI Listing Assistant error:", err);
+    } finally {
+      setAiAnalyzing(false);
+    }
+  };
 
   const categories = [
     "Electronics",
@@ -40,6 +66,11 @@ const SellItem = () => {
 
     const newPreviews = files.map(file => URL.createObjectURL(file));
     setPreviewImages([...previewImages, ...newPreviews]);
+    
+    // Auto-detect details from image name
+    if (files.length > 0) {
+      runAIAssistant("", files[0].name);
+    }
   };
 
   const removeImage = (index) => {
@@ -104,6 +135,12 @@ const SellItem = () => {
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
           
+          {/* AI Banner */}
+          <div className="bg-[#f4ead2] dark:bg-[rgba(184,177,139,0.1)] border border-[#d8c9b2] dark:border-[var(--border-color)] px-4 py-3 rounded-2xl flex items-center justify-between text-sm text-[#8b6d48] dark:text-[#ecd8b1] font-bold">
+            <span>✨ AI-assisted smart listings active.</span>
+            {aiAnalyzing && <span className="animate-pulse text-xs">AI is analyzing...</span>}
+          </div>
+
           {/* Title & Price */}
           <div className="grid md:grid-cols-2 gap-6">
             <div>
@@ -112,10 +149,22 @@ const SellItem = () => {
                 type="text"
                 name="title"
                 required
+                value={formData.title}
                 className="w-full px-4 py-2 rounded-3xl border border-border-color bg-surface text-text-primary focus:ring-2 focus:ring-[#d4b16c] focus:border-transparent transition"
                 placeholder="e.g. Engineering Graphics Kit"
                 onChange={handleInputChange}
               />
+              <div className="flex justify-between items-center mt-1 px-1">
+                <span className="text-[10px] text-text-secondary">Or upload an image with keywords</span>
+                <button
+                  type="button"
+                  disabled={!formData.title || aiAnalyzing}
+                  onClick={() => runAIAssistant(formData.title, "")}
+                  className="text-xs text-[#8b6d48] dark:text-[#ecd8b1] font-bold hover:underline disabled:opacity-50 disabled:no-underline flex items-center gap-0.5"
+                >
+                  ✨ AI Auto-fill
+                </button>
+              </div>
             </div>
             <div>
               <label className="block text-text-primary font-medium mb-1">Price (₹)</label>
@@ -123,10 +172,16 @@ const SellItem = () => {
                 type="number"
                 name="price"
                 required
+                value={formData.price}
                 className="w-full px-4 py-2 rounded-3xl border border-border-color bg-surface text-text-primary focus:ring-2 focus:ring-[#d4b16c] focus:border-transparent transition"
                 placeholder="e.g. 500"
                 onChange={handleInputChange}
               />
+              {formData.price && (
+                <div className="text-[10px] text-[#8b6d48] dark:text-[#ecd8b1] mt-1 px-1 font-semibold">
+                  Suggested Price: ₹{formData.price} (AI-estimated)
+                </div>
+              )}
             </div>
           </div>
 
@@ -137,6 +192,7 @@ const SellItem = () => {
               <select
                 name="category"
                 required
+                value={formData.category}
                 className="w-full px-4 py-2 rounded-lg border border-border-color bg-surface text-text-primary focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition"
                 onChange={handleInputChange}
               >
@@ -150,6 +206,7 @@ const SellItem = () => {
                 type="text"
                 name="subCategory"
                 required
+                value={formData.subCategory}
                 className="w-full px-4 py-2 rounded-lg border border-border-color bg-surface text-text-primary focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
                 placeholder="e.g. 1st Year, CSE, Dorm"
                 onChange={handleInputChange}
@@ -164,6 +221,7 @@ const SellItem = () => {
               name="description"
               required
               rows="4"
+              value={formData.description}
               className="w-full px-4 py-2 rounded-lg border border-border-color bg-surface text-text-primary focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
               placeholder="Describe the condition, age, and details of your item..."
               onChange={handleInputChange}
