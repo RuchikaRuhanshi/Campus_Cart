@@ -96,14 +96,14 @@ const Items = () => {
     return (
         <div className="relative min-h-screen bg-transparent dark:bg-[var(--bg-primary)] pt-24 pb-16 px-4 md:px-8 transition-colors duration-300 font-sans overflow-hidden">
 
-            {/* Global Campus Fixed Backdrop */}
-            <div className="fixed inset-0 z-0 pointer-events-none">
+            {/* Global Campus Fixed Backdrop - Dark Mode Only */}
+            <div className="hidden dark:block fixed inset-0 z-0 pointer-events-none">
                 <img 
                     src="https://images.unsplash.com/photo-1498243691581-b145c3f54a91?q=80&w=1800&auto=format" 
                     alt="Campus Library Background" 
-                    className="w-full h-full object-cover opacity-20 dark:opacity-20"
+                    className="w-full h-full object-cover opacity-60"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-[var(--bg-primary)]/35 to-[var(--bg-primary)]/70 dark:from-black/45 dark:via-black/85 dark:to-[var(--bg-primary)]"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/85 to-[var(--bg-primary)]"></div>
             </div>
 
             <div className="max-w-7xl mx-auto relative z-10">
