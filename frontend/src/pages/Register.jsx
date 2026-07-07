@@ -61,16 +61,6 @@ const Register = () => {
   return (
     <div className="relative min-h-screen flex items-center justify-center px-4 py-16 overflow-hidden">
       
-      {/* Real Campus Backdrop */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-          <img 
-              src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1200&auto=format" 
-              alt="Campus backdrop" 
-              className="w-full h-full object-cover opacity-45 dark:opacity-30 scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/70 to-[var(--bg-primary)] dark:from-black/45 dark:via-black/75 dark:to-[var(--bg-primary)]"></div>
-      </div>
-
       <div className="relative z-10 w-full max-w-4xl p-8 md:p-10 glass-panel rounded-[32px] overflow-hidden animate-float-soft shadow-lg">
         <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-r from-[var(--accent)]/10 to-transparent blur-3xl" />
         <div className="relative grid gap-8 lg:grid-cols-[1.3fr_0.7fr] items-start">

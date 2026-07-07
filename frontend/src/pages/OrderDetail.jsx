@@ -101,17 +101,7 @@ const OrderDetail = () => {
     const isConfirmed = order.status === "CONFIRMED" || order.status === "COMPLETED";
 
     return (
-        <div className="relative min-h-screen bg-[var(--bg-primary)] dark:bg-[var(--bg-primary)] pt-24 pb-16 px-4 transition-colors duration-300 overflow-hidden font-sans">
-            
-            {/* Global Campus Fixed Backdrop */}
-            <div className="fixed inset-0 z-0 pointer-events-none">
-                <img 
-                    src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200&auto=format" 
-                    alt="Campus Sunset Background" 
-                    className="w-full h-full object-cover opacity-45 dark:opacity-30"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-white/25 via-white/80 to-[var(--bg-primary)] dark:from-black/45 dark:via-black/85 dark:to-[var(--bg-primary)]"></div>
-            </div>
+        <div className="relative min-h-screen bg-transparent pt-24 pb-16 px-4 transition-colors duration-300 overflow-hidden font-sans">
 
             <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6 relative z-10">
                 

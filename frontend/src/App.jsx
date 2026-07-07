@@ -18,6 +18,7 @@ import UrgentFeed from "./pages/UrgentFeed.jsx";
 import Heatmap from "./pages/Heatmap.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import AICopilot from "./components/AICopilot.jsx";
+import PageBackdrop from "./components/PageBackdrop.jsx";
 
 // ... imports
 import { ThemeProvider } from "./context/ThemeContext";
@@ -52,7 +53,7 @@ function App() {
   return (
     <ThemeProvider>
       <NotificationProvider>
-       {/* ... existing Routes ... */}
+       <PageBackdrop />
        <Navbar />
        <Routes>
         <Route path="/login" element={<Login />} />

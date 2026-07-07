@@ -102,18 +102,8 @@ const MyOrders = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-transparent dark:bg-[var(--bg-primary)] pt-24 pb-16 px-4 md:px-8 transition-colors duration-300 font-sans overflow-hidden">
+    <div className="relative min-h-screen bg-transparent pt-24 pb-16 px-4 md:px-8 transition-colors duration-300 font-sans overflow-hidden">
       
-      {/* Global Campus Fixed Backdrop */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-          <img 
-              src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1200&auto=format" 
-              alt="Campus Sunset Background" 
-              className="w-full h-full object-cover opacity-20 dark:opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-[var(--bg-primary)]/35 to-[var(--bg-primary)]/70 dark:from-black/45 dark:via-black/85 dark:to-[var(--bg-primary)]"></div>
-      </div>
-
       <div className="max-w-5xl mx-auto relative z-10">
         
         {/* Header Block */}

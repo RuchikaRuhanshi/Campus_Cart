@@ -89,17 +89,7 @@ const UrgentFeed = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-transparent dark:bg-[var(--bg-primary)] pt-24 pb-16 px-4 sm:px-8 transition-colors duration-300 overflow-hidden font-sans">
-
-      {/* Global Campus Fixed Backdrop - Dark Mode Only */}
-      <div className="hidden dark:block fixed inset-0 z-0 pointer-events-none">
-        <img
-          src="https://images.unsplash.com/photo-U7c8rTBwc0c?q=80&w=1200&auto=format"
-          alt="Campus sunset plaza"
-          className="w-full h-full object-cover opacity-50"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/85 to-[var(--bg-primary)]"></div>
-      </div>
+    <div className="relative min-h-screen bg-transparent pt-24 pb-16 px-4 sm:px-8 transition-colors duration-300 overflow-hidden font-sans">
 
       <div className="max-w-5xl mx-auto relative z-10">
 

@@ -277,16 +277,6 @@ const Home = () => {
     return (
         <div className="relative min-h-screen bg-transparent transition-colors duration-500 overflow-x-hidden font-sans selection:text-[var(--accent)] selection:bg-[var(--accent)]/20">
 
-            {/* Global Campus Fixed Backdrop */}
-            <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-                <img
-                    src={graduatingStudentsImg}
-                    alt="Graduating Students Background"
-                    className="w-full h-full object-cover opacity-60 dark:opacity-40"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-[var(--bg-primary)] dark:via-black/60 dark:to-[var(--bg-primary)]"></div>
-            </div>
-
             {/* HERO SECTION */}
             <section ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-start pt-32 pb-20 px-6 sm:px-12 overflow-hidden hero-sassy z-10">
 

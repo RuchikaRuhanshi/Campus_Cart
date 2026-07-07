@@ -142,18 +142,8 @@ const UserAccount = () => {
   );
 
   return (
-    <div className="relative min-h-screen bg-[var(--bg-primary)] dark:bg-[var(--bg-primary)] pt-24 pb-16 px-4 md:px-8 transition-colors duration-300 overflow-hidden font-sans">
+    <div className="relative min-h-screen bg-transparent pt-24 pb-16 px-4 md:px-8 transition-colors duration-300 overflow-hidden font-sans">
       
-      {/* Global Campus Fixed Backdrop */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-          <img 
-              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format" 
-              alt="Campus Workspace Background" 
-              className="w-full h-full object-cover opacity-45 dark:opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/70 to-[var(--bg-primary)] dark:from-black/45 dark:via-black/85 dark:to-[var(--bg-primary)]"></div>
-      </div>
-
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 relative z-10">
         
         {/* Sidebar */}

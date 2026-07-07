@@ -30,17 +30,7 @@ const Favorite = () => {
   }
 
   return (
-    <div className="relative min-h-screen bg-transparent dark:bg-[var(--bg-primary)] pt-24 pb-16 px-4 md:px-6 transition-colors duration-300 font-sans overflow-hidden">
-
-      {/* Global Campus Fixed Backdrop - Dark Mode Only */}
-      <div className="hidden dark:block fixed inset-0 z-0 pointer-events-none">
-        <img
-          src="https://images.unsplash.com/photo-1523050854-01023f1de670?q=80&w=1200&auto=format"
-          alt="Campus architecture"
-          className="w-full h-full object-cover opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/85 to-[var(--bg-primary)]"></div>
-      </div>
+    <div className="relative min-h-screen bg-transparent pt-24 pb-16 px-4 md:px-6 transition-colors duration-300 font-sans overflow-hidden">
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* <h1 className="text-4xl font-bold text-text-primary mb-8">My Favorites</h1>                                                                                                                                                            */}
