@@ -19,6 +19,14 @@ const Home = () => {
     const bentoRef = useRef(null);
     const inventoryRef = useRef(null);
 
+    // Add home-page class to body on mount, remove on unmount
+    useEffect(() => {
+        document.body.classList.add("home-page");
+        return () => {
+            document.body.classList.remove("home-page");
+        };
+    }, []);
+
     const [scrollProgress, setScrollProgress] = useState(0);
     const [currentImage, setCurrentImage] = useState(0);
     const images = [

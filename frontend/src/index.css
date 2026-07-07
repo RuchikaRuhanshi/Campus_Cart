@@ -116,6 +116,13 @@
     --bg-size: auto;
   }
 
+  html:not(.dark) body.home-page {
+    --bg-image: 
+      radial-gradient(circle at 10% 20%, rgba(140, 115, 72, 0.12), transparent 45%),
+      radial-gradient(circle at 90% 80%, rgba(181, 165, 147, 0.1), transparent 45%);
+    --bg-size: 100% 100%, 100% 100%;
+  }
+
   html {
     color-scheme: light;
   }
