@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import api from "../utils/api";
 import { Link } from "react-router-dom";
-import { FiTrash2, FiShoppingCart } from "react-icons/fi";
+import { FiTrash2, FiShoppingCart, FiHeart } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 
 const Favorite = () => {
@@ -33,7 +33,32 @@ const Favorite = () => {
     <div className="relative min-h-screen bg-transparent pt-24 pb-16 px-4 md:px-6 transition-colors duration-300 font-sans overflow-hidden">
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* <h1 className="text-4xl font-bold text-text-primary mb-8">My Favorites</h1>                                                                                                                                                            */}
+        
+        {/* Header Block */}
+        <div className="relative rounded-[32px] border border-[var(--border-color)] p-8 mb-10 overflow-hidden shadow-sm bg-[var(--bg-surface)]">
+            {/* Background real campus photography */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <img 
+                    src="https://images.unsplash.com/photo-1523050854-01023f1de670?q=80&w=1200&auto=format" 
+                    alt="Campus Library Favorites" 
+                    className="w-full h-full object-cover opacity-20 dark:opacity-40 scale-105 filter blur-[0.5px]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-surface)] via-[var(--bg-surface)]/90 to-transparent"></div>
+            </div>
+            <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-[var(--accent)] bg-[var(--accent)]/10 px-3 py-1 rounded-full flex items-center gap-1.5 w-fit">
+                        <FiHeart className="animate-pulse" /> Saved Items
+                    </span>
+                    <h1 className="text-3xl sm:text-4xl font-extrabold mt-3 text-slate-900 dark:text-white leading-none">
+                        My Favorites
+                    </h1>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 max-w-xl">
+                        Your curated list of saved campus deals. Keep track of items you want to purchase or watch for updates.
+                    </p>
+                </div>
+            </div>
+        </div>
 
         {/* DEBUG */}
         {/* <pre className="text-xs text-red-500 overflow-auto max-h-40 bg-gray-100 p-4 mb-4">

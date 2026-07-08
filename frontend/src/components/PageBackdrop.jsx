@@ -10,7 +10,7 @@ const ROUTE_BACKGROUNDS = {
   "/favorite": "https://images.unsplash.com/photo-1523050854-01023f1de670?q=80&w=1600&auto=format",
   "/my-account": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format",
   "/items/create": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=1600&auto=format",
-  "/orders": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1600&auto=format",
+  "/orders": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1600&auto=format",
   "/urgent": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1600&auto=format",
   "/heatmap": "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1600&auto=format",
   "/analytics": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format",
@@ -35,7 +35,7 @@ export default function PageBackdrop() {
     }
 
     if (!matchedBg) {
-      matchedBg = "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1600&auto=format";
+      matchedBg = "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1600&auto=format";
     }
 
     setBgImage(matchedBg);
@@ -49,7 +49,7 @@ export default function PageBackdrop() {
         src={bgImage}
         alt="Page Campus Background"
         className={`w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
-          isHome ? "opacity-60 dark:opacity-60" : "opacity-20 dark:opacity-20"
+          isHome ? "opacity-60 dark:opacity-80" : "opacity-20 dark:opacity-40"
         }`}
       />
       <div 

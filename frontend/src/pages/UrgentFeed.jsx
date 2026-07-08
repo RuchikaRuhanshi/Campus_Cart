@@ -99,7 +99,7 @@ const UrgentFeed = () => {
             <img
               src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1200&auto=format"
               alt="Campus sunset plaza"
-              className="w-full h-full object-cover opacity-35 dark:opacity-35 scale-105 filter blur-[0.5px]"
+              className="w-full h-full object-cover opacity-35 dark:opacity-55 scale-105 filter blur-[0.5px]"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
           </div>

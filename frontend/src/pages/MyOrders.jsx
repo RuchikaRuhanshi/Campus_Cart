@@ -111,9 +111,9 @@ const MyOrders = () => {
             {/* Background real campus photography */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <img 
-                    src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1200&auto=format" 
+                    src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format" 
                     alt="Campus meetup zone" 
-                    className="w-full h-full object-cover opacity-20 dark:opacity-20 scale-105 filter blur-[0.5px]"
+                    className="w-full h-full object-cover opacity-20 dark:opacity-40 scale-105 filter blur-[0.5px]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-surface)] via-[var(--bg-surface)]/90 to-transparent"></div>
             </div>
