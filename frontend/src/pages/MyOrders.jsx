@@ -111,7 +111,7 @@ const MyOrders = () => {
             {/* Background real campus photography */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <img 
-                    src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200&auto=format" 
+                    src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1200&auto=format" 
                     alt="Campus meetup zone" 
                     className="w-full h-full object-cover opacity-20 dark:opacity-10 scale-105 filter blur-[0.5px]"
                 />

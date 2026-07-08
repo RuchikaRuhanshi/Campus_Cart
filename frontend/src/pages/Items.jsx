@@ -103,7 +103,7 @@ const Items = () => {
                     {/* Background real campus photography */}
                     <div className="absolute inset-0 z-0 pointer-events-none">
                         <img 
-                            src="https://images.unsplash.com/photo-1498243691581-b145c3f54a91?q=80&w=1200&auto=format" 
+                            src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=1200&auto=format" 
                             alt="Marketplace campus hall" 
                             className="w-full h-full object-cover opacity-20 dark:opacity-10 scale-105 filter blur-[0.5px]"
                         />
