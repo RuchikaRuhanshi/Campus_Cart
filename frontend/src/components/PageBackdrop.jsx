@@ -49,14 +49,14 @@ export default function PageBackdrop() {
         src={bgImage}
         alt="Page Campus Background"
         className={`w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
-          isHome ? "opacity-60 dark:opacity-40" : "opacity-20 dark:opacity-15"
+          isHome ? "opacity-60 dark:opacity-60" : "opacity-20 dark:opacity-20"
         }`}
       />
       <div 
         className={`absolute inset-0 transition-all duration-500 bg-gradient-to-b ${
           isHome
-            ? "from-transparent via-white/50 to-[var(--bg-primary)] dark:via-black/60 dark:to-[var(--bg-primary)]"
-            : "from-white/20 via-white/70 to-[var(--bg-primary)] dark:from-black/45 dark:via-black/85 dark:to-[var(--bg-primary)]"
+            ? "from-transparent via-white/50 to-[var(--bg-primary)] dark:via-black/50 dark:to-[var(--bg-primary)]"
+            : "from-white/20 via-white/70 to-[var(--bg-primary)] dark:from-black/20 dark:via-black/70 dark:to-[var(--bg-primary)]"
         }`}
       />
     </div>

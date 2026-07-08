@@ -309,7 +309,7 @@ const Heatmap = () => {
                 <img 
                     src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1200&auto=format" 
                     alt="Campus safe zones" 
-                    className="w-full h-full object-cover opacity-25 dark:opacity-15 scale-105 filter blur-[0.5px]"
+                    className="w-full h-full object-cover opacity-25 dark:opacity-25 scale-105 filter blur-[0.5px]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-surface)] via-[var(--bg-surface)]/90 to-transparent"></div>
             </div>
