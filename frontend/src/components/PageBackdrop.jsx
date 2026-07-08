@@ -11,7 +11,7 @@ const ROUTE_BACKGROUNDS = {
   "/my-account": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format",
   "/items/create": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=1600&auto=format",
   "/orders": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format",
-  "/urgent": "https://images.unsplash.com/photo-U7c8rTBwc0c?q=80&w=1600&auto=format",
+  "/urgent": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1600&auto=format",
   "/heatmap": "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1600&auto=format",
   "/analytics": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format",
 };

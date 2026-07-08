@@ -114,7 +114,7 @@ const EditItem = () => {
     if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
 
     return (
-        <div className="min-h-screen bg-primary py-10 px-4 transition-colors duration-300">
+        <div className="min-h-screen bg-transparent pt-24 pb-16 px-4 transition-colors duration-300">
             <div className="max-w-3xl mx-auto bg-surface p-8 rounded-3xl shadow-sm border border-border-color">
                 <div className="flex justify-between items-center mb-6">
                      <h2 className="text-2xl font-bold text-text-primary">Edit Item</h2>

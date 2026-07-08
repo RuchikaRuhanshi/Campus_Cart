@@ -293,14 +293,14 @@ const Heatmap = () => {
 
   if (!isLoaded) {
     return (
-      <div className="min-h-screen bg-[var(--bg-primary)] dark:bg-[var(--bg-primary)] flex items-center justify-center">
+      <div className="min-h-screen bg-transparent flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--accent)]"></div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-[var(--bg-primary)] dark:bg-[var(--bg-primary)] pt-24 pb-16 px-4 sm:px-8 transition-colors duration-300 overflow-hidden">
+    <div className="relative min-h-screen bg-transparent pt-24 pb-16 px-4 sm:px-8 transition-colors duration-300 overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Title Banner Block with real university background */}

@@ -35,7 +35,7 @@ const MyOrders = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="relative min-h-screen bg-[var(--bg-primary)] pt-32 pb-16 px-6 text-center">
+      <div className="relative min-h-screen bg-transparent pt-32 pb-16 px-6 text-center">
         <div className="max-w-md mx-auto glass-panel p-8 rounded-[32px] border border-[var(--border-color)]">
           <FiShoppingBag className="mx-auto text-4xl text-[var(--accent)] mb-4" />
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Access Denied</h2>
@@ -50,7 +50,7 @@ const MyOrders = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
+      <div className="min-h-screen flex items-center justify-center bg-transparent">
         <div className="text-center">
           <div className="w-10 h-10 border-4 border-[var(--accent)] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-slate-500 font-semibold">Loading your active orders...</p>
@@ -61,7 +61,7 @@ const MyOrders = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
+      <div className="min-h-screen flex items-center justify-center bg-transparent">
         <div className="glass-panel p-6 rounded-2xl border border-red-500/20 text-center max-w-sm">
           <p className="text-red-500 font-bold mb-4">{error}</p>
           <button onClick={() => window.location.reload()} className="px-6 py-2 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-white rounded-full font-bold">
@@ -108,6 +108,15 @@ const MyOrders = () => {
         
         {/* Header Block */}
         <div className="relative rounded-[32px] border border-[var(--border-color)] p-8 mb-10 overflow-hidden shadow-sm bg-[var(--bg-surface)]">
+            {/* Background real campus photography */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <img 
+                    src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200&auto=format" 
+                    alt="Campus meetup zone" 
+                    className="w-full h-full object-cover opacity-20 dark:opacity-10 scale-105 filter blur-[0.5px]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-surface)] via-[var(--bg-surface)]/90 to-transparent"></div>
+            </div>
             <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
                     <span className="text-[10px] uppercase font-bold tracking-widest text-[var(--accent)] bg-[var(--accent)]/10 px-3 py-1 rounded-full flex items-center gap-1.5 w-fit">

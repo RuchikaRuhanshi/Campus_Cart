@@ -126,7 +126,7 @@ const SellItem = () => {
   };
 
   return (
-    <div className="min-h-screen bg-primary py-10 px-4">
+    <div className="min-h-screen bg-transparent pt-24 pb-16 px-4">
       <div className="max-w-3xl mx-auto bg-surface rounded-[32px] shadow-sassy overflow-hidden border border-border-color">
         <div className="bg-gradient-to-r from-[#8b6d48] via-[#b8b18b] to-[#e7d4ae] px-8 py-6">
           <h1 className="text-3xl font-bold text-white">Sell an Item</h1>
